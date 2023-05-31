@@ -10,6 +10,14 @@ class Cell {
     this.y--;
   };
 
+  moveLeft = () => {
+    this.x--;
+  };
+
+  moveRight = () => {
+    this.x++;
+  };
+
   rotateClockwise = (center) => {
     const ca = { x: this.x - center[0], y: this.y - center[1] };
     const rotatedCa = { x: ca.y, y: -ca.x };

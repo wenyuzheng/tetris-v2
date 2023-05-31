@@ -7,6 +7,18 @@ describe("Cell", () => {
     expect([cell.x, cell.y]).toEqual([1, 0]);
   });
 
+  test("moveLeft", () => {
+    const cell = new Cell(1, 1, "blue");
+    cell.moveLeft();
+    expect([cell.x, cell.y]).toEqual([0, 1]);
+  });
+
+  test("moveRight", () => {
+    const cell = new Cell(1, 1, "blue");
+    cell.moveRight();
+    expect([cell.x, cell.y]).toEqual([2, 1]);
+  });
+
   test("rotateClockwise eg1", () => {
     const cell = new Cell(3, 1, "blue");
     const centerPosition = [0, 0];

@@ -1,3 +1,3 @@
 describe("Board", () => {
-  test("", () => {});
+  test("removeFullRow", () => {});
 });
