@@ -10,7 +10,9 @@ class Piece {
   };
 
   rotateClockwise = () => {
-    // this.cells.
+    const center = this.cells[1];
+    const centerCoord = [center.x, center.y];
+    this.cells.forEach((cell) => cell.rotateClockwise(centerCoord));
   };
 }
 

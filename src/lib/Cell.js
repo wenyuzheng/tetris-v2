@@ -7,7 +7,14 @@ class Cell {
   }
 
   moveDown = () => {
-    this.y++;
+    this.y--;
+  };
+
+  rotateClockwise = (center) => {
+    const ca = { x: this.x - center[0], y: this.y - center[1] };
+    const rotatedCa = { x: ca.y, y: -ca.x };
+    this.x = center[0] + rotatedCa.x;
+    this.y = center[1] + rotatedCa.y;
   };
 }
 
