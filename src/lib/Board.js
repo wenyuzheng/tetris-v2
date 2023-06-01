@@ -29,21 +29,21 @@ class Board {
     }
   }
 
-  isValidToMoveCurrPiece(direction) {
-    const currPieceCopy = _.cloneDeep(this.currPiece);
-    currPieceCopy.move(direction);
-    console.log(currPieceCopy.cells);
-    return currPieceCopy.cells.every((cell) => {
-      return cell.y >= 0 && cell.x >= 0 && cell.x < this.width;
-    });
-  }
+  // isValidToMoveCurrPiece(direction) {
+  //   const currPieceCopy = _.cloneDeep(this.currPiece);
+  //   currPieceCopy.move(direction);
+  //   console.log(currPieceCopy.cells);
+  //   return currPieceCopy.cells.every((cell) => {
+  //     return cell.y >= 0 && cell.x >= 0 && cell.x < this.width;
+  //   });
+  // }
 
-  moveCurrPiece(direction) {
-    this.currPiece.move(direction);
-    // const currPieceCopy = _.cloneDeep(this.currPiece);
-    // currPieceCopy.move(direction);
-    // if (currPieceCopy.)
-  }
+  // moveCurrPiece(direction) {
+  //   this.currPiece.move(direction);
+  //   // const currPieceCopy = _.cloneDeep(this.currPiece);
+  //   // currPieceCopy.move(direction);
+  //   // if (currPieceCopy.)
+  // }
 }
 
 export default Board;
