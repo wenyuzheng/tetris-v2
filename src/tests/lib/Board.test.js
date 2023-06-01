@@ -105,6 +105,48 @@ describe("Board", () => {
     expect(result).toEqual(expected);
   });
 
+  test("isPositionValid outside board left", () => {
+    const board = new Board(4, 4, []);
+    const result = board.isPositionValid(-1, 1);
+    expect(result).toEqual(false);
+  });
+
+  test("isPositionValid outside board right", () => {
+    const board = new Board(4, 4, []);
+    const result = board.isPositionValid(4, 1);
+    expect(result).toEqual(false);
+  });
+
+  test("isPositionValid outside board down", () => {
+    const board = new Board(4, 4, []);
+    const result = board.isPositionValid(2, -1);
+    expect(result).toEqual(false);
+  });
+
+  test("isPositionValid inside board eg1", () => {
+    const board = new Board(4, 4, []);
+    const result = board.isPositionValid(3, 3);
+    expect(result).toEqual(true);
+  });
+
+  test("isPositionValid inside board eg2", () => {
+    const board = new Board(4, 4, []);
+    const result = board.isPositionValid(1, 1);
+    expect(result).toEqual(true);
+  });
+
+  test("isPositionValid meet cell eg1", () => {
+    const board = new Board(4, 4, [new Cell(1, 1)]);
+    const result = board.isPositionValid(1, 1);
+    expect(result).toEqual(false);
+  });
+
+  test("isPositionValid meet cell eg2", () => {
+    const board = new Board(4, 4, [new Cell(1, 1)]);
+    const result = board.isPositionValid(1, 0);
+    expect(result).toEqual(true);
+  });
+
   // test("moveCurrPiece right", () => {
   //   const piecePositions = [
   //     [0, 2],
