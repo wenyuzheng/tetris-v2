@@ -1,10 +1,11 @@
 import Cell from "../../lib/Cell";
 
 describe("Cell", () => {
-  test("moveDown", () => {
+  it("moveDown", () => {
     const cell = new Cell(1, 1, "blue");
     cell.moveDown();
     expect([cell.x, cell.y]).toEqual([1, 0]);
+    expect(cell).toEqual(new Cell(1, 0, "blue"));
   });
 
   test("moveLeft", () => {

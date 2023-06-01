@@ -1,29 +1,29 @@
 class Cell {
-  constructor(x, y, color) {
+  constructor(x, y, color = "white") {
     this.x = x;
     this.y = y;
     this.color = color;
     // occupied?
   }
 
-  moveDown = () => {
+  moveDown() {
     this.y--;
-  };
+  }
 
-  moveLeft = () => {
+  moveLeft() {
     this.x--;
-  };
+  }
 
-  moveRight = () => {
+  moveRight() {
     this.x++;
-  };
+  }
 
-  rotateClockwise = (center) => {
+  rotateClockwise(center) {
     const ca = { x: this.x - center[0], y: this.y - center[1] };
     const rotatedCa = { x: ca.y, y: -ca.x };
     this.x = center[0] + rotatedCa.x;
     this.y = center[1] + rotatedCa.y;
-  };
+  }
 }
 
 export default Cell;
