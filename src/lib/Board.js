@@ -1,8 +1,9 @@
 class Board {
-  constructor(width, height, cellsArr) {
+  constructor(width, height, cellsArr, currPiece) {
     this.height = height;
     this.width = width;
     this.cellsArr = cellsArr;
+    this.currPiece = currPiece;
   }
 
   removeSingleFullRow(row) {
@@ -24,6 +25,10 @@ class Board {
         counter++;
       }
     }
+  }
+
+  moveCurrPiece(direction) {
+    this.currPiece.move(direction);
   }
 }
 

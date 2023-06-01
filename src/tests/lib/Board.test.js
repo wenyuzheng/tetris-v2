@@ -1,5 +1,6 @@
 import Board from "../../lib/Board";
 import Cell from "../../lib/Cell";
+import Piece from "../../lib/Piece";
 
 describe("Board", () => {
   it("removeSingleFullRow eg1", () => {
@@ -101,6 +102,66 @@ describe("Board", () => {
       new Cell(3, 0),
     ];
     const result = board.cellsArr;
+    expect(result).toEqual(expected);
+  });
+
+  test("moveCurrPiece right", () => {
+    const piecePositions = [
+      [0, 2],
+      [1, 2],
+      [1, 0],
+      [2, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    board.moveCurrPiece("right");
+    const result = piece.cells;
+    const expected = [
+      new Cell(1, 2),
+      new Cell(2, 2),
+      new Cell(2, 0),
+      new Cell(3, 0),
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("moveCurrPiece left", () => {
+    const piecePositions = [
+      [1, 2],
+      [2, 2],
+      [2, 0],
+      [3, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    board.moveCurrPiece("left");
+    const result = piece.cells;
+    const expected = [
+      new Cell(0, 2),
+      new Cell(1, 2),
+      new Cell(1, 0),
+      new Cell(2, 0),
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("moveCurrPiece down", () => {
+    const piecePositions = [
+      [0, 2],
+      [1, 2],
+      [1, 1],
+      [2, 1],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    board.moveCurrPiece("down");
+    const result = piece.cells;
+    const expected = [
+      new Cell(0, 1),
+      new Cell(1, 1),
+      new Cell(1, 0),
+      new Cell(2, 0),
+    ];
     expect(result).toEqual(expected);
   });
 });
