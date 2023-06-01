@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 class Board {
   constructor(width, height, cellsArr, currPiece) {
     this.height = height;
@@ -27,8 +29,20 @@ class Board {
     }
   }
 
+  isValidToMoveCurrPiece(direction) {
+    const currPieceCopy = _.cloneDeep(this.currPiece);
+    currPieceCopy.move(direction);
+    console.log(currPieceCopy.cells);
+    return currPieceCopy.cells.every((cell) => {
+      return cell.y >= 0 && cell.x >= 0 && cell.x < this.width;
+    });
+  }
+
   moveCurrPiece(direction) {
     this.currPiece.move(direction);
+    // const currPieceCopy = _.cloneDeep(this.currPiece);
+    // currPieceCopy.move(direction);
+    // if (currPieceCopy.)
   }
 }
 

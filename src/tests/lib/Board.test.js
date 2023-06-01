@@ -164,4 +164,82 @@ describe("Board", () => {
     ];
     expect(result).toEqual(expected);
   });
+
+  test("isValidToMove down eg1", () => {
+    const piecePositions = [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [2, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("down");
+    expect(result).toEqual(false);
+  });
+
+  test("isValidToMove down eg2", () => {
+    const piecePositions = [
+      [0, 2],
+      [1, 2],
+      [1, 1],
+      [2, 1],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("down");
+    expect(result).toEqual(true);
+  });
+
+  test("isValidToMove left eg1", () => {
+    const piecePositions = [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [2, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("left");
+    expect(result).toEqual(false);
+  });
+
+  test("isValidToMove left eg2", () => {
+    const piecePositions = [
+      [1, 2],
+      [2, 2],
+      [2, 0],
+      [3, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("left");
+    expect(result).toEqual(true);
+  });
+
+  test("isValidToMove right eg1", () => {
+    const piecePositions = [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [2, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(3, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("right");
+    expect(result).toEqual(false);
+  });
+
+  test("isValidToMove right eg2", () => {
+    const piecePositions = [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [2, 0],
+    ];
+    const piece = new Piece(piecePositions);
+    const board = new Board(4, 4, [], piece);
+    const result = board.isValidToMoveCurrPiece("right");
+    expect(result).toEqual(true);
+  });
 });
