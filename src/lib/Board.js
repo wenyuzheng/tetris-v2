@@ -12,7 +12,19 @@ class Board {
     });
   }
 
-  removeFullRows() {}
+  removeFullRows() {
+    let counter = 0;
+    let cellNum = this.cellsArr.filter((cell) => cell.y === counter).length;
+
+    while (cellNum !== 0) {
+      cellNum = this.cellsArr.filter((cell) => cell.y === counter).length;
+      if (cellNum === this.width) {
+        this.removeSingleFullRow(counter);
+      } else {
+        counter++;
+      }
+    }
+  }
 }
 
 export default Board;
