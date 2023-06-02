@@ -1,16 +1,12 @@
 import _ from "lodash";
 
 const isPieceAtBottom = (piece, board) => {
-  const pos = piece.getPositionAfterMove("down");
-  const r = pos.some((p) =>
-    board.cellsArr.some((e) => {
-      return e[0] === p[0] && e[1] === p[1];
-    })
+  const position = piece.getPositionAfterMove("down");
+  const result = position.some((p) =>
+    board.cellsArr.some((e) => e.x === p[0] && e.y === p[1])
   );
 
-  return piece.cells.some((e) => {
-    return e.y === 0 || r;
-  });
+  return piece.cells.some((e) => e.y === 0 || result);
 };
 
 export default isPieceAtBottom;
