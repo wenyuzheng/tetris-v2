@@ -2,6 +2,30 @@ import Board from "../../../lib/classes/Board";
 import Cell from "../../../lib/classes/Cell";
 
 describe("Board", () => {
+  it("addCells eg1", () => {
+    const cells = [new Cell(0, 1), new Cell(1, 1), new Cell(3, 2)];
+    const board = new Board(4, 4, []);
+    board.addCells(cells);
+    expect(board.cellsArr).toEqual([
+      new Cell(0, 1),
+      new Cell(1, 1),
+      new Cell(3, 2),
+    ]);
+  });
+
+  it("addCells eg2", () => {
+    const cells = [new Cell(0, 1), new Cell(1, 1), new Cell(3, 2)];
+    const board = new Board(4, 4, [new Cell(2, 1), new Cell(0, 2)]);
+    board.addCells(cells);
+    expect(board.cellsArr).toEqual([
+      new Cell(2, 1),
+      new Cell(0, 2),
+      new Cell(0, 1),
+      new Cell(1, 1),
+      new Cell(3, 2),
+    ]);
+  });
+
   it("removeSingleFullRow eg1", () => {
     const cellsArr = [
       new Cell(0, 1),

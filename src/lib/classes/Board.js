@@ -7,6 +7,10 @@ class Board {
     this.cellsArr = cellsArr;
   }
 
+  addCells(cells) {
+    this.cellsArr.push(...cells);
+  }
+
   removeSingleFullRow(row) {
     this.cellsArr = this.cellsArr.filter((cell) => cell.y !== row);
     this.cellsArr.forEach((cell) => {
