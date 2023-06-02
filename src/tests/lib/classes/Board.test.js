@@ -1,6 +1,5 @@
-import Board from "../../lib/Board";
-import Cell from "../../lib/Cell";
-import Piece from "../../lib/Piece";
+import Board from "../../../lib/classes/Board";
+import Cell from "../../../lib/classes/Cell";
 
 describe("Board", () => {
   it("removeSingleFullRow eg1", () => {

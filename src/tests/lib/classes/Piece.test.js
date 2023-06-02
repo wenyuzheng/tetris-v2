@@ -1,4 +1,4 @@
-import Piece from "../../lib/Piece";
+import Piece from "../../../lib/classes/Piece";
 
 describe("Piece", () => {
   test("getPositionAfterMove down", () => {

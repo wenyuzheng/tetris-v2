@@ -1,4 +1,4 @@
-import Cell from "../../lib/Cell";
+import Cell from "../../../lib/classes/Cell";
 
 describe("Cell", () => {
   it("moveDown", () => {
