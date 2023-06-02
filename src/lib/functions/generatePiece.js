@@ -1,3 +1,4 @@
+import _ from "lodash";
 import Piece from "../classes/Piece";
 
 const generatePiece = (width, height) => {
