@@ -10,19 +10,36 @@ const cellsArr = [
   new Cell(3, 0),
 ];
 
-const game = new Game(new Board(4, 10, cellsArr));
-game.runPiece(10);
+const game = new Game(new Board(8, 6));
+game.runPiece(4000);
 
 function App() {
   return (
     <div className="App">
       <button
         onClick={() => {
-          console.log(game.board.cellsArr);
+          game.movePiece("left");
+          console.log(game.piece.cells);
         }}
       >
-        run
+        left
       </button>
+      <button
+        onClick={() => {
+          game.movePiece("right");
+          console.log(game.piece.cells);
+        }}
+      >
+        right
+      </button>
+      {/* <button
+        onClick={() => {
+          game.movePiece("down");
+          console.log(game.piece.cells);
+        }}
+      >
+        down
+      </button> */}
     </div>
   );
 }
