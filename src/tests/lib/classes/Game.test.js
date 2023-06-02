@@ -1,3 +1,5 @@
+import Game from "../../../lib/classes/Game";
+
 describe("Game", () => {
-  test("eg 1", () => {});
+  test("eg1", () => {});
 });

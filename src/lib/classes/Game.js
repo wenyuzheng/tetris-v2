@@ -1,5 +1,5 @@
-import Piece from "./Piece";
-
 class Game {
   constructor(width, height) {}
 }
+
+export default Game;
