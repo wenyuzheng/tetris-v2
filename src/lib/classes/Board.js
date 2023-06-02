@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 class Board {
-  constructor(width, height, cellsArr) {
+  constructor(width, height, cellsArr = []) {
     this.height = height;
     this.width = width;
     this.cellsArr = cellsArr;
@@ -35,6 +35,10 @@ class Board {
   isPositionValid(x, y) {
     const exisitingCells = this.cellsArr.filter((e) => e.x === x && e.y === y);
     return y >= 0 && x >= 0 && x < this.width && exisitingCells.length === 0;
+  }
+
+  isPositionArrayValid(arr) {
+    return arr.every(([x, y]) => this.isPositionValid(x, y));
   }
 
   // isValidToMoveCurrPiece(direction) {
