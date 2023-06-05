@@ -8,7 +8,7 @@ class Game {
 
     this.board = board;
     this.piece = generatePiece(board.width, board.height);
-    this.gameOver = false;
+    // this.gameOver = false;
     // this.counter = 2;
   }
 
@@ -30,9 +30,6 @@ class Game {
 
   runPiece(timeInterval = 1000) {
     const setInt = setInterval(() => {
-      this.movePiece("down");
-      console.log("aftermove", this.piece.cells);
-
       if (isPieceAtBottom(this.piece, this.board)) {
         this.board.addCells(this.piece.cells);
         this.board.removeFullRows();
@@ -40,21 +37,23 @@ class Game {
 
         clearInterval(setInt);
 
-        const gameOver = this.isEndGame();
-        console.log({ gameOver });
-        if (!gameOver) {
-          console.log("end over");
+        // const gameOver = this.isEndGame();
+
+        if (!this.isEndGame()) {
           this.piece = generatePiece(this.board.width, this.board.height);
           console.log(this.piece);
           this.runPiece(timeInterval);
         }
+      } else {
+        this.movePiece("down");
+        console.log("aftermove", this.piece.cells);
       }
     }, timeInterval);
   }
 
-  async run(timeInterval) {
-    this.runPiece(timeInterval);
-  }
+  // async run(timeInterval) {
+  //   this.runPiece(timeInterval);
+  // }
 }
 
 export default Game;
