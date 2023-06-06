@@ -9,18 +9,11 @@ class Game {
     this.board = board;
     this.piece = generatePiece(board.width, board.height);
 
-    this.timeInterval = 1000;
     this.score = 0;
   }
 
   isEndGame() {
     return isPieceReachedTop(this.piece, this.board);
-  }
-
-  changeTimeInterval() {
-    if (this.timeInterval !== 100 && this.score % 2 === 0) {
-      this.timeInterval -= 100;
-    }
   }
 
   movePiece(direction) {
@@ -30,8 +23,11 @@ class Game {
     }
   }
 
-  runPiece(timeInterval = 1000) {
+  runPiece(timeInt = 1000) {
+    let timeInterval = timeInt;
+
     const setInt = setInterval(() => {
+      console.log(timeInterval);
       if (isPieceAtBottom(this.piece, this.board)) {
         if (!this.isEndGame()) {
           this.board.addCells(this.piece.cells);
@@ -42,9 +38,11 @@ class Game {
           this.piece = generatePiece(this.board.width, this.board.height);
           console.log(this.piece);
 
-          this.changeTimeInterval();
+          if (!timeInterval <= 100 && this.score % 2 === 0) {
+            timeInterval -= 100;
+          }
 
-          this.runPiece(this.timeInterval);
+          this.runPiece(timeInterval);
         } else {
           console.log("end game");
           clearInterval(setInt);
