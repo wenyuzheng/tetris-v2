@@ -5,8 +5,9 @@ import Game from "./lib/classes/Game";
 
 const cellsArr = [new Cell(2, 0), new Cell(3, 0)];
 
-const game = new Game(new Board(3, 10));
+const game = new Game(new Board(3, 5));
 game.runPiece(2000);
+// game.run();
 
 function App() {
   return (
