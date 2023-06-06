@@ -8,17 +8,19 @@ class Game {
 
     this.board = board;
     this.piece = generatePiece(board.width, board.height);
-    // this.gameOver = false;
-    // this.counter = 2;
+
+    this.timeInterval = 1000;
+    this.score = 0;
   }
 
   isEndGame() {
-    // this.counter--;
-    // if (this.counter === 0) {
-    //   return true;
-    // }
-
     return isPieceReachedTop(this.piece, this.board);
+  }
+
+  changeTimeInterval() {
+    if (this.timeInterval !== 100 && this.score % 2 === 0) {
+      this.timeInterval -= 100;
+    }
   }
 
   movePiece(direction) {
@@ -31,19 +33,23 @@ class Game {
   runPiece(timeInterval = 1000) {
     const setInt = setInterval(() => {
       if (isPieceAtBottom(this.piece, this.board)) {
-        this.board.addCells(this.piece.cells);
-        this.board.removeFullRows();
-        console.log("board cells", this.board.cellsArr);
-
-        clearInterval(setInt);
-
-        // const gameOver = this.isEndGame();
-
         if (!this.isEndGame()) {
+          this.board.addCells(this.piece.cells);
+          this.board.removeFullRows();
+
+          this.score++;
+
           this.piece = generatePiece(this.board.width, this.board.height);
           console.log(this.piece);
-          this.runPiece(timeInterval);
+
+          this.changeTimeInterval();
+
+          this.runPiece(this.timeInterval);
+        } else {
+          console.log("end game");
+          clearInterval(setInt);
         }
+        console.log("board cells", this.board.cellsArr);
       } else {
         this.movePiece("down");
         console.log("aftermove", this.piece.cells);
@@ -51,7 +57,21 @@ class Game {
     }, timeInterval);
   }
 
-  // async run(timeInterval) {
+  // runPiece(timeInterval = 1000) {
+  //   const setInt = setInterval(() => {
+  //     this.movePiece("down");
+  //     console.log("aftermove", this.piece.cells);
+
+  //     if (isPieceAtBottom(this.piece, this.board)) {
+  //       this.board.addCells(this.piece.cells);
+  //       this.board.removeFullRows();
+  //       console.log("board cells", this.board.cellsArr);
+  //       clearInterval(setInt);
+  //     }
+  //   }, timeInterval);
+  // }
+
+  // run(timeInterval = 1000) {
   //   this.runPiece(timeInterval);
   // }
 }
