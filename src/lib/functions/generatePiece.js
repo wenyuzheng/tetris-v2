@@ -2,7 +2,7 @@ import _ from "lodash";
 import Piece from "../classes/Piece";
 
 const generatePiece = (width, height) => {
-  const midW = Math.floor(width / 2);
+  const midW = Math.floor(width / 2) - 1;
   const h = height - 1;
 
   const square = [
