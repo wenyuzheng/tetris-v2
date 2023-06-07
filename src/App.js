@@ -3,11 +3,10 @@ import Board from "./lib/classes/Board";
 import Cell from "./lib/classes/Cell";
 import Game from "./lib/classes/Game";
 
-const cellsArr = [new Cell(2, 0), new Cell(3, 0)];
+const cellsArr = [new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)];
 
-const game = new Game(new Board(3, 5));
+const game = new Game(new Board(4, 8, cellsArr));
 game.runPiece(2000);
-// game.run();
 
 function App() {
   return (

@@ -4,8 +4,6 @@ import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isPieceReachedTop from "../functions/isPieceReachedTop";
 class Game {
   constructor(board) {
-    _.sample = (arr) => arr[0];
-
     this.board = board;
     this.piece = generatePiece(board.width, board.height);
 
@@ -36,7 +34,7 @@ class Game {
           this.score++;
 
           this.piece = generatePiece(this.board.width, this.board.height);
-          console.log(this.piece);
+          // console.log(this.piece);
 
           if (!timeInterval <= 100 && this.score % 2 === 0) {
             timeInterval -= 100;
@@ -44,8 +42,8 @@ class Game {
         } else {
           console.log("end game");
           clearInterval(setInt);
-          console.log("board cells", this.board.cellsArr);
         }
+        console.log("board cells", this.board.cellsArr);
       } else {
         this.movePiece("down");
         console.log("aftermove", this.piece.cells);
