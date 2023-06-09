@@ -6,7 +6,7 @@ describe("Board", () => {
     const cells = [new Cell(0, 1), new Cell(1, 1), new Cell(3, 2)];
     const board = new Board(4, 4, []);
     board.addCells(cells);
-    expect(board.cellsArr).toEqual([
+    expect(board.cells).toEqual([
       new Cell(0, 1),
       new Cell(1, 1),
       new Cell(3, 2),
@@ -17,7 +17,7 @@ describe("Board", () => {
     const cells = [new Cell(0, 1), new Cell(1, 1), new Cell(3, 2)];
     const board = new Board(4, 4, [new Cell(2, 1), new Cell(0, 2)]);
     board.addCells(cells);
-    expect(board.cellsArr).toEqual([
+    expect(board.cells).toEqual([
       new Cell(2, 1),
       new Cell(0, 2),
       new Cell(0, 1),
@@ -27,7 +27,7 @@ describe("Board", () => {
   });
 
   it("removeSingleFullRow eg1", () => {
-    const cellsArr = [
+    const cells = [
       new Cell(0, 1),
       new Cell(1, 1),
       new Cell(3, 1),
@@ -36,15 +36,15 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const board = new Board(4, 4, cellsArr);
+    const board = new Board(4, 4, cells);
     board.removeSingleFullRow(0);
     const expected = [new Cell(0, 0), new Cell(1, 0), new Cell(3, 0)];
-    const result = board.cellsArr;
+    const result = board.cells;
     expect(result).toEqual(expected);
   });
 
   it("removeSingleFullRow eg2", () => {
-    const cellsArr = [
+    const cells = [
       new Cell(0, 2),
       new Cell(0, 1),
       new Cell(1, 1),
@@ -54,7 +54,7 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const board = new Board(4, 4, cellsArr);
+    const board = new Board(4, 4, cells);
     board.removeSingleFullRow(1);
     const expected = [
       new Cell(0, 1),
@@ -62,12 +62,12 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const result = board.cellsArr;
+    const result = board.cells;
     expect(result).toEqual(expected);
   });
 
   it("removeFullRows eg1", () => {
-    const cellsArr = [
+    const cells = [
       new Cell(0, 2),
       new Cell(0, 1),
       new Cell(1, 1),
@@ -78,15 +78,15 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const board = new Board(4, 4, cellsArr);
+    const board = new Board(4, 4, cells);
     board.removeFullRows();
     const expected = [new Cell(0, 0)];
-    const result = board.cellsArr;
+    const result = board.cells;
     expect(result).toEqual(expected);
   });
 
   it("removeFullRows eg2", () => {
-    const cellsArr = [
+    const cells = [
       new Cell(0, 2),
       new Cell(1, 2),
       new Cell(2, 2),
@@ -98,15 +98,15 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const board = new Board(4, 4, cellsArr);
+    const board = new Board(4, 4, cells);
     board.removeFullRows();
     const expected = [new Cell(0, 0), new Cell(1, 0)];
-    const result = board.cellsArr;
+    const result = board.cells;
     expect(result).toEqual(expected);
   });
 
   it("removeFullRows eg3", () => {
-    const cellsArr = [
+    const cells = [
       new Cell(2, 2),
       new Cell(0, 1),
       new Cell(1, 1),
@@ -116,7 +116,7 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const board = new Board(4, 4, cellsArr);
+    const board = new Board(4, 4, cells);
     board.removeFullRows();
     const expected = [
       new Cell(2, 1),
@@ -124,7 +124,7 @@ describe("Board", () => {
       new Cell(2, 0),
       new Cell(3, 0),
     ];
-    const result = board.cellsArr;
+    const result = board.cells;
     expect(result).toEqual(expected);
   });
 

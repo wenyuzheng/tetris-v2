@@ -15,7 +15,7 @@ describe("GameV2", () => {
     );
 
     await game.run();
-    expect(game.board.cellsArr.length).toEqual(4);
+    expect(game.board.cells.length).toEqual(4);
   });
 
   test("rotatePiece eg1", () => {

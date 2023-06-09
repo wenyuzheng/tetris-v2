@@ -43,7 +43,7 @@ class Game {
           console.log("end game");
           clearInterval(setInt);
         }
-        console.log("board cells", this.board.cellsArr);
+        console.log("board cells", this.board.cells);
       } else {
         this.movePiece("down");
         console.log("aftermove", this.piece.cells);

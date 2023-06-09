@@ -1,29 +1,29 @@
 import _ from "lodash";
 
 class Board {
-  constructor(width, height, cellsArr = []) {
+  constructor(width, height, cells = []) {
     this.height = height;
     this.width = width;
-    this.cellsArr = cellsArr;
+    this.cells = cells;
   }
 
   addCells(cells) {
-    this.cellsArr.push(...cells);
+    this.cells.push(...cells);
   }
 
   removeSingleFullRow(row) {
-    this.cellsArr = this.cellsArr.filter((cell) => cell.y !== row);
-    this.cellsArr.forEach((cell) => {
+    this.cells = this.cells.filter((cell) => cell.y !== row);
+    this.cells.forEach((cell) => {
       if (cell.y > row) cell.y--;
     });
   }
 
   removeFullRows() {
     let counter = 0;
-    let cellNum = this.cellsArr.filter((cell) => cell.y === counter).length;
+    let cellNum = this.cells.filter((cell) => cell.y === counter).length;
 
     while (cellNum !== 0) {
-      cellNum = this.cellsArr.filter((cell) => cell.y === counter).length;
+      cellNum = this.cells.filter((cell) => cell.y === counter).length;
       if (cellNum === this.width) {
         this.removeSingleFullRow(counter);
       } else {
@@ -33,7 +33,7 @@ class Board {
   }
 
   isPositionValid(x, y) {
-    const exisitingCells = this.cellsArr.filter((e) => e.x === x && e.y === y);
+    const exisitingCells = this.cells.filter((e) => e.x === x && e.y === y);
     return y >= 0 && x >= 0 && x < this.width && exisitingCells.length === 0;
   }
 

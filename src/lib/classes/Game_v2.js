@@ -45,11 +45,15 @@ class GameV2 {
       this.board.removeFullRows();
       this.runViewUpdate();
 
-      console.log("board cells", this.board.cellsArr);
+      console.log("board cells", this.board.cells);
 
       this.piece = this.pieceGenerator();
       this.runViewUpdate();
     }
+  }
+
+  compileViewData() {
+    return [];
   }
 
   runViewUpdate() {
