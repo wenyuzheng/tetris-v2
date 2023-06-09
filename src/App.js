@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import Board from "./lib/classes/Board";
 import Cell from "./lib/classes/Cell";
@@ -18,6 +19,11 @@ const game = new GameV2(
 game.run();
 
 function App() {
+  const [viewData, setViewData] = useState([]);
+  useEffect(() => {
+    game.viewUpdater = setViewData;
+  }, []);
+
   return (
     <div className="App">
       <button

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
+import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -26,20 +27,40 @@ class GameV2 {
     }
   }
 
+  rotatePiece() {
+    this.piece.rotateClockwise();
+    const outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
+    if (outOfBoard !== false) {
+      this.piece.move(outOfBoard);
+    }
+  }
+
   runPiece() {
     this.movePiece("down");
+    this.runViewUpdate();
     console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
       this.board.removeFullRows();
+      this.runViewUpdate();
+
       console.log("board cells", this.board.cellsArr);
 
       this.piece = this.pieceGenerator();
+      this.runViewUpdate();
+    }
+  }
+
+  runViewUpdate() {
+    if (this.viewUpdater !== undefined) {
+      const newViewData = this.compileViewData();
+      this.viewUpdater(newViewData);
     }
   }
 
   async run() {
+    this.runViewUpdate();
     // this.moveLeftTest();
 
     while (!isGameOver(this.piece, this.board)) {

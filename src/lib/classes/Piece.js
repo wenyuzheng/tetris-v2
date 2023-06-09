@@ -42,19 +42,21 @@ class Piece {
         this.cells.forEach((e) => e.moveLeft());
         break;
 
+      case "up":
+        this.cells.forEach((e) => e.moveUp());
+        break;
+
       default:
         break;
     }
   }
 
   rotateClockwise() {
-    const center = this.cells[this.centerIndex];
-    const centerCoord = [center.x, center.y];
-    this.cells.forEach((cell) => cell.rotateClockwise(centerCoord));
-  }
-
-  moveWithinBoard() {
-    // this.piece;
+    if (this.centerIndex !== undefined) {
+      const center = this.cells[this.centerIndex];
+      const centerCoord = [center.x, center.y];
+      this.cells.forEach((cell) => cell.rotateClockwise(centerCoord));
+    }
   }
 }
 

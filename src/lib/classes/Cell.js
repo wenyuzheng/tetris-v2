@@ -3,7 +3,6 @@ class Cell {
     this.x = x;
     this.y = y;
     this.color = color;
-    // occupied?
   }
 
   moveDown() {
@@ -16,6 +15,10 @@ class Cell {
 
   moveRight() {
     this.x++;
+  }
+
+  moveUp() {
+    this.y++;
   }
 
   rotateClockwise(center) {
