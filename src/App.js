@@ -10,7 +10,11 @@ const cellsArr = [new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)];
 // const game = new Game(new Board(4, 8, cellsArr));
 
 const board = new Board(4, 5);
-const game = new GameV2(board, () => generatePiece(board.width, board.height));
+const game = new GameV2(
+  board,
+  () => generatePiece(board.width, board.height),
+  1000
+);
 game.run();
 
 function App() {

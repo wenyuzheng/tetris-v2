@@ -125,7 +125,7 @@ describe("Piece", () => {
       [2, 3],
       [3, 3],
     ];
-    const tube = new Piece(positionArr, "blue");
+    const tube = new Piece(positionArr, "blue", 1);
     tube.rotateClockwise();
     const result = tube.cells.map((e) => [e.x, e.y]);
     const expected = [

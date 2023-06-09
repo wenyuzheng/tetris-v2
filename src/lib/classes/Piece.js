@@ -2,8 +2,9 @@ import _ from "lodash";
 import Cell from "./Cell";
 
 class Piece {
-  constructor(positionArr, color) {
+  constructor(positionArr, color, centerIndex) {
     this.cells = positionArr.map((pos) => new Cell(pos[0], pos[1], color));
+    this.centerIndex = centerIndex;
   }
 
   getPositionAfterMove(direction) {
@@ -47,9 +48,13 @@ class Piece {
   }
 
   rotateClockwise() {
-    const center = this.cells[1];
+    const center = this.cells[this.centerIndex];
     const centerCoord = [center.x, center.y];
     this.cells.forEach((cell) => cell.rotateClockwise(centerCoord));
+  }
+
+  moveWithinBoard() {
+    // this.piece;
   }
 }
 

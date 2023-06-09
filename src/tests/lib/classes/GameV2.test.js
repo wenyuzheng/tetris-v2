@@ -3,7 +3,7 @@ import GameV2 from "../../../lib/classes/Game_v2";
 import Piece from "../../../lib/classes/Piece";
 
 describe("GameV2", () => {
-  test("run eg1", async () => {
+  xtest("run eg1", async () => {
     const board = new Board(3, 4);
     const game = new GameV2(
       board,

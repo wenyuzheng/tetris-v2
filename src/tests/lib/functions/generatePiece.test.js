@@ -9,10 +9,10 @@ describe("generatePiece", () => {
     const result = generatePiece(5, 8);
     const expected = new Piece(
       [
+        [1, 7],
         [2, 7],
-        [3, 7],
+        [1, 6],
         [2, 6],
-        [3, 6],
       ],
       "red"
     );
@@ -25,10 +25,10 @@ describe("generatePiece", () => {
     const result = generatePiece(4, 8);
     const expected = new Piece(
       [
+        [1, 7],
         [2, 7],
-        [3, 7],
+        [1, 6],
         [2, 6],
-        [3, 6],
       ],
       "red"
     );

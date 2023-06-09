@@ -1,7 +1,6 @@
 import _ from "lodash";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
-import generatePiece from "../functions/generatePiece";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -27,10 +26,6 @@ class GameV2 {
     }
   }
 
-  isGameOver() {
-    return isGameOver(this.piece, this.board);
-  }
-
   runPiece() {
     this.movePiece("down");
     console.log("aftermove", this.piece.cells);
@@ -47,7 +42,7 @@ class GameV2 {
   async run() {
     // this.moveLeftTest();
 
-    while (!this.isGameOver()) {
+    while (!isGameOver(this.piece, this.board)) {
       this.runPiece();
       await this.wait(this.delay);
     }
