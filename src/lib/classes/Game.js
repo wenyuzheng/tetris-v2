@@ -1,7 +1,7 @@
 import _ from "lodash";
 import generatePiece from "../functions/generatePiece";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
-import isPieceReachedTop from "../functions/isPieceReachedTop";
+import isGameOver from "../functions/isGameOver";
 class Game {
   constructor(board) {
     this.board = board;
@@ -11,7 +11,7 @@ class Game {
   }
 
   isEndGame() {
-    return isPieceReachedTop(this.piece, this.board);
+    return isGameOver(this.piece, this.board);
   }
 
   movePiece(direction) {

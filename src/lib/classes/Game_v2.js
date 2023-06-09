@@ -1,6 +1,6 @@
 import _ from "lodash";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
-import isPieceReachedTop from "../functions/isPieceReachedTop";
+import isGameOver from "../functions/isGameOver";
 import generatePiece from "../functions/generatePiece";
 
 class GameV2 {
@@ -28,7 +28,7 @@ class GameV2 {
   }
 
   isGameOver() {
-    return isPieceReachedTop(this.piece, this.board);
+    return isGameOver(this.piece, this.board);
   }
 
   runPiece() {
