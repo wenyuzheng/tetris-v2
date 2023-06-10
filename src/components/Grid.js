@@ -29,17 +29,14 @@ const Grid = ({ width, height, viewData }) => {
     <StyledGrid squareSize={squareSize} width={width} height={height}>
       {xIndices.map((i) => {
         return yIndices.map((j) => {
-          const cells = viewData;
-          const cell = hasCell(i, j, cells);
+          const cell = hasCell(i, j, viewData);
           return (
             <div
               key={`${i}-${j}}`}
               style={{
-                backgroundColor: cell === false ? "#a4a4a4" : cell.color,
+                backgroundColor: cell === false ? "#3a3b3c" : cell.color,
               }}
-            >
-              {`${i}-${j}`}
-            </div>
+            />
           );
         });
       })}

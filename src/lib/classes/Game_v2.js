@@ -5,8 +5,6 @@ import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
-    _.sample = (arr) => arr[2];
-
     this.board = board;
     this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
@@ -29,14 +27,16 @@ class GameV2 {
   }
 
   rotatePiece() {
-    this.piece.rotateClockwise();
-    let outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
-    while (outOfBoard !== false) {
-      this.piece.move(outOfBoard);
-      // console.log({ outOfBoard }, this.piece.cells);
-      outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
+    if (!isPieceAtBottom(this.piece, this.board)) {
+      this.piece.rotateClockwise();
+      let outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
+      while (outOfBoard !== false) {
+        this.piece.move(outOfBoard);
+        // console.log({ outOfBoard }, this.piece.cells);
+        outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
+      }
+      this.runViewUpdate();
     }
-    this.runViewUpdate();
   }
 
   runPiece() {
@@ -67,7 +67,7 @@ class GameV2 {
   async run() {
     this.runViewUpdate();
 
-    await this.wait(3000);
+    await this.wait(1000);
     while (!isGameOver(this.piece, this.board)) {
       this.runPiece();
       await this.wait(this.delay);

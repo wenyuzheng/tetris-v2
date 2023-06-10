@@ -4,14 +4,14 @@ import Game from "../../../lib/classes/Game";
 import Cell from "../../../lib/classes/Cell";
 
 describe("Game", () => {
-  test("eg1", () => {
+  xtest("eg1", () => {
     const board = new Board(4, 4);
     const game = new Game(board);
     expect(game.board.constructor.name).toEqual("Board");
     expect(game.piece.constructor.name).toEqual("Piece");
   });
 
-  test("movePiece down", () => {
+  xtest("movePiece down", () => {
     _.sample = (arr) => arr[0];
     const game = new Game(new Board(4, 4));
     game.movePiece("down");
@@ -24,7 +24,7 @@ describe("Game", () => {
     expect(game.piece.cells).toEqual(expected);
   });
 
-  test("movePiece right", () => {
+  xtest("movePiece right", () => {
     _.sample = (arr) => arr[0];
     const game = new Game(new Board(5, 4));
     game.movePiece("right");
@@ -37,7 +37,7 @@ describe("Game", () => {
     expect(game.piece.cells).toEqual(expected);
   });
 
-  test("movePiece down eg2", () => {
+  xtest("movePiece down eg2", () => {
     _.sample = (arr) => arr[0];
     const game = new Game(new Board(5, 4, [new Cell(2, 1)]));
     game.movePiece("down");

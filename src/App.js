@@ -48,6 +48,14 @@ function App() {
       </button>
       <button
         onClick={() => {
+          game.movePiece("down");
+          console.log(game.piece.cells);
+        }}
+      >
+        down
+      </button>
+      <button
+        onClick={() => {
           game.rotatePiece();
           console.log(game.piece.cells);
         }}
