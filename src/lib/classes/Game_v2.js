@@ -54,7 +54,14 @@ class GameV2 {
   }
 
   compileViewData() {
-    return this.board.cells.concat(this.piece.cells);
+    let result = {};
+    this.board.cells.forEach(
+      (cell) => (result[`${cell.x}-${cell.y}`] = cell.color)
+    );
+    this.piece.cells.forEach(
+      (cell) => (result[`${cell.x}-${cell.y}`] = cell.color)
+    );
+    return result;
   }
 
   runViewUpdate() {

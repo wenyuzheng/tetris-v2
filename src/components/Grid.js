@@ -12,15 +12,8 @@ const StyledGrid = styled.div`
   grid-auto-flow: column;
 `;
 
-const hasCell = (i, j, cells) => {
-  for (const cell of cells) {
-    if (cell.x === i && cell.y === j) return cell;
-  }
-  return false;
-};
-
 const Grid = ({ width, height, viewData }) => {
-  const squareSize = 50;
+  const squareSize = 30;
 
   const xIndices = [...Array(width).keys()];
   const yIndices = [...Array(height).keys()].reverse();
@@ -29,12 +22,12 @@ const Grid = ({ width, height, viewData }) => {
     <StyledGrid squareSize={squareSize} width={width} height={height}>
       {xIndices.map((i) => {
         return yIndices.map((j) => {
-          const cell = hasCell(i, j, viewData);
+          const cell = viewData[`${i}-${j}`];
           return (
             <div
               key={`${i}-${j}}`}
               style={{
-                backgroundColor: cell === false ? "#3a3b3c" : cell.color,
+                backgroundColor: cell === undefined ? "#3a3b3c" : cell,
               }}
             />
           );
