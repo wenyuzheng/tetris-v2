@@ -30,10 +30,11 @@ class GameV2 {
 
   rotatePiece() {
     this.piece.rotateClockwise();
-    const outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
-    if (outOfBoard !== false) {
+    let outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
+    while (outOfBoard !== false) {
       this.piece.move(outOfBoard);
-      console.log({ outOfBoard }, this.piece.cells);
+      // console.log({ outOfBoard }, this.piece.cells);
+      outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
     }
     this.runViewUpdate();
   }
