@@ -7,17 +7,12 @@ import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 
-const cells = [new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)];
-
-// const game = new Game(new Board(4, 8, cells));
-
-const board = new Board(4, 5);
+const board = new Board(5, 8);
 const game = new GameV2(
   board,
   () => generatePiece(board.width, board.height),
-  1000
+  1500
 );
-// game.run();
 
 function App() {
   const [viewData, setViewData] = useState([]);
@@ -27,7 +22,38 @@ function App() {
 
   return (
     <div className="App">
-      <Grid board={board} piece={game.piece} />
+      <Grid width={board.width} height={board.height} viewData={viewData} />
+      <button
+        onClick={() => {
+          game.run();
+        }}
+      >
+        start
+      </button>
+      <button
+        onClick={() => {
+          game.movePiece("left");
+          console.log(game.piece.cells);
+        }}
+      >
+        left
+      </button>
+      <button
+        onClick={() => {
+          game.movePiece("right");
+          console.log(game.piece.cells);
+        }}
+      >
+        right
+      </button>
+      <button
+        onClick={() => {
+          game.rotatePiece();
+          console.log(game.piece.cells);
+        }}
+      >
+        rotate
+      </button>
     </div>
   );
 }

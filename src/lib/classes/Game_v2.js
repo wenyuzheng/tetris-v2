@@ -5,7 +5,7 @@ import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
-    _.sample = (arr) => arr[0];
+    _.sample = (arr) => arr[2];
 
     this.board = board;
     this.pieceGenerator = pieceGenerator;
@@ -25,6 +25,7 @@ class GameV2 {
     if (this.board.isPositionArrayValid(position)) {
       this.piece.move(direction);
     }
+    this.runViewUpdate();
   }
 
   rotatePiece() {
@@ -32,12 +33,13 @@ class GameV2 {
     const outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
     if (outOfBoard !== false) {
       this.piece.move(outOfBoard);
+      console.log({ outOfBoard }, this.piece.cells);
     }
+    this.runViewUpdate();
   }
 
   runPiece() {
     this.movePiece("down");
-    this.runViewUpdate();
     console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
@@ -45,15 +47,13 @@ class GameV2 {
       this.board.removeFullRows();
       this.runViewUpdate();
 
-      console.log("board cells", this.board.cells);
-
       this.piece = this.pieceGenerator();
       this.runViewUpdate();
     }
   }
 
   compileViewData() {
-    return [];
+    return this.board.cells.concat(this.piece.cells);
   }
 
   runViewUpdate() {
@@ -65,21 +65,14 @@ class GameV2 {
 
   async run() {
     this.runViewUpdate();
-    // this.moveLeftTest();
 
+    await this.wait(3000);
     while (!isGameOver(this.piece, this.board)) {
       this.runPiece();
       await this.wait(this.delay);
     }
 
     console.log("game over");
-  }
-
-  moveLeftTest() {
-    setTimeout(() => {
-      this.movePiece("left");
-      console.log("moved left", this.piece.cells);
-    }, 3000);
   }
 }
 
