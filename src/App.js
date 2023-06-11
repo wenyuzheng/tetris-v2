@@ -6,7 +6,7 @@ import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 
-const board = new Board(8, 15);
+const board = new Board(10, 20);
 const game = new GameV2(
   board,
   () => generatePiece(board.width, board.height),

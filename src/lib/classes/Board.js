@@ -41,6 +41,13 @@ class Board {
     return arr.every(([x, y]) => this.isPositionValid(x, y));
   }
 
+  areRotatePositionsValid(arr) {
+    return arr.every(([x, y]) => {
+      const exisitingCells = this.cells.filter((e) => e.x === x && e.y === y);
+      return exisitingCells.length === 0;
+    });
+  }
+
   // isValidToMoveCurrPiece(direction) {
   //   const currPieceCopy = _.cloneDeep(this.currPiece);
   //   currPieceCopy.move(direction);

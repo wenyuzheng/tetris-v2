@@ -22,9 +22,18 @@ class Piece {
         cellsCopy.forEach((e) => e.moveLeft());
         break;
 
+      case "rotate":
+        if (this.centerIndex !== undefined) {
+          const center = cellsCopy[this.centerIndex];
+          const centerCoord = [center.x, center.y];
+          cellsCopy.forEach((cell) => cell.rotateClockwise(centerCoord));
+        }
+        break;
+
       default:
         break;
     }
+
     return cellsCopy.map((e) => [e.x, e.y]);
   }
 

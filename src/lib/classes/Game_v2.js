@@ -27,7 +27,8 @@ class GameV2 {
   }
 
   rotatePiece() {
-    if (!isPieceAtBottom(this.piece, this.board)) {
+    const position = this.piece.getPositionAfterMove("rotate");
+    if (this.board.areRotatePositionsValid(position)) {
       this.piece.rotateClockwise();
       let outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
       while (outOfBoard !== false) {

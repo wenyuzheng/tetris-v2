@@ -61,6 +61,26 @@ describe("Piece", () => {
     expect(originalPiecePositions).toEqual(piecePositions);
   });
 
+  test("getPositionAfterMove rotate", () => {
+    const piecePositions = [
+      [0, 3],
+      [1, 3], // center
+      [2, 3],
+      [3, 3],
+    ];
+    const piece = new Piece(piecePositions, "blue", 1);
+    const result = piece.getPositionAfterMove("rotate");
+    const expected = [
+      [1, 4],
+      [1, 3],
+      [1, 2],
+      [1, 1],
+    ];
+    expect(result).toEqual(expected);
+    const originalPiecePositions = piece.cells.map((e) => [e.x, e.y]);
+    expect(originalPiecePositions).toEqual(piecePositions);
+  });
+
   test("move down", () => {
     const positionArr = [
       [0, 4],
