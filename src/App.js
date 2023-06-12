@@ -4,6 +4,7 @@ import Board from "./lib/classes/Board";
 import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
+import useLongPress from "./lib/hooks/useLongPress";
 
 const board = new Board(10, 20);
 const game = new GameV2(
@@ -21,6 +22,11 @@ function App() {
   useEffect(() => {
     game.viewUpdater = setViewData;
   }, []);
+
+  const longPressDown = useLongPress(() => game.movePiece("down"), 100);
+  const longPressLeft = useLongPress(() => game.movePiece("left"), 100);
+  const longPressRight = useLongPress(() => game.movePiece("right"), 100);
+  const longPressRotate = useLongPress(() => game.rotatePiece(), 100);
 
   return (
     <div className="App">
@@ -52,45 +58,49 @@ function App() {
             >
               {game.pause ? "resume" : "pause"}
             </button>
-            <button
-              onClick={() => {
-                game.movePiece("left");
-                console.log(game.piece.cells);
-              }}
-            >
-              left
-            </button>
-            <button
-              onClick={() => {
-                game.movePiece("right");
-                console.log(game.piece.cells);
-              }}
-            >
-              right
-            </button>
-            <button
-              onClick={() => {
-                game.movePiece("down");
-                console.log(game.piece.cells);
-              }}
-            >
-              down
-            </button>
-            <button
-              onClick={() => {
-                game.rotatePiece();
-                console.log(game.piece.cells);
-              }}
-            >
-              rotate
-            </button>
-            <button
-              onClick={() => {
-                game.swapHoldPiece();
-              }}
-            >
-              hold
-            </button>
+            {game.pause ? null : (
+              <div style={{ marginTop: 10 }}>
+                <button
+                  {...longPressLeft}
+                  onClick={() => {
+                    game.movePiece("left");
+                  }}
+                >
+                  left
+                </button>
+                <button
+                  {...longPressRight}
+                  onClick={() => {
+                    game.movePiece("right");
+                  }}
+                >
+                  right
+                </button>
+                <button
+                  {...longPressDown}
+                  onClick={() => {
+                    game.movePiece("down");
+                  }}
+                >
+                  down
+                </button>
+                <button
+                  {...longPressRotate}
+                  onClick={() => {
+                    game.rotatePiece();
+                  }}
+                >
+                  rotate
+                </button>
+                <button
+                  onClick={() => {
+                    game.swapHoldPiece();
+                  }}
+                >
+                  hold
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <button
