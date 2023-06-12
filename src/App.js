@@ -43,59 +43,64 @@ function App() {
         </div>
       </div>
       <div style={{ margin: 20 }}>
-        <button
-          onClick={() => {
-            game.pauseGame();
-          }}
-        >
-          {game.pause ? "resume" : "pause"}
-        </button>
-        <button
-          onClick={() => {
-            game.run();
-          }}
-        >
-          start
-        </button>
-        <button
-          onClick={() => {
-            game.movePiece("left");
-            console.log(game.piece.cells);
-          }}
-        >
-          left
-        </button>
-        <button
-          onClick={() => {
-            game.movePiece("right");
-            console.log(game.piece.cells);
-          }}
-        >
-          right
-        </button>
-        <button
-          onClick={() => {
-            game.movePiece("down");
-            console.log(game.piece.cells);
-          }}
-        >
-          down
-        </button>
-        <button
-          onClick={() => {
-            game.rotatePiece();
-            console.log(game.piece.cells);
-          }}
-        >
-          rotate
-        </button>
-        <button
-          onClick={() => {
-            game.swapHoldPiece();
-          }}
-        >
-          hold
-        </button>
+        {game.start ? (
+          <div>
+            <button
+              onClick={() => {
+                game.pauseGame();
+              }}
+            >
+              {game.pause ? "resume" : "pause"}
+            </button>
+            <button
+              onClick={() => {
+                game.movePiece("left");
+                console.log(game.piece.cells);
+              }}
+            >
+              left
+            </button>
+            <button
+              onClick={() => {
+                game.movePiece("right");
+                console.log(game.piece.cells);
+              }}
+            >
+              right
+            </button>
+            <button
+              onClick={() => {
+                game.movePiece("down");
+                console.log(game.piece.cells);
+              }}
+            >
+              down
+            </button>
+            <button
+              onClick={() => {
+                game.rotatePiece();
+                console.log(game.piece.cells);
+              }}
+            >
+              rotate
+            </button>
+            <button
+              onClick={() => {
+                game.swapHoldPiece();
+              }}
+            >
+              hold
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => {
+              game.run();
+            }}
+          >
+            start
+          </button>
+        )}
       </div>
     </div>
   );

@@ -3,18 +3,23 @@ import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
-import pieces from "../constants/Pieces";
+import { getRandomPieceName } from "../functions/generatePiece";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
     this.delay = delay;
     this.board = board;
-    this.pieceGenerator = pieceGenerator;
+    // this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
-    this.queuePieceName = _.sample(Object.keys(pieces));
+    this.queuePieceName = getRandomPieceName();
     this.heldPieceName = null;
     this.isPieceSwapped = false;
+    this.start = false;
     this.pause = true;
+  }
+
+  getPieceByName(pieceName) {
+    return placePieceOnGrid(this.board.width, this.board.height, pieceName);
   }
 
   wait(delay) {
@@ -53,12 +58,8 @@ class GameV2 {
       this.board.removeFullRows();
       this.runViewUpdate();
 
-      this.piece = placePieceOnGrid(
-        this.board.width,
-        this.board.height,
-        this.queuePieceName
-      );
-      this.queuePieceName = _.sample(Object.keys(pieces));
+      this.piece = this.getPieceByName(this.queuePieceName);
+      this.queuePieceName = getRandomPieceName();
       this.isPieceSwapped = false;
       this.runViewUpdate();
     }
@@ -73,19 +74,11 @@ class GameV2 {
     if (!this.isPieceSwapped) {
       if (this.heldPieceName === null) {
         this.heldPieceName = this.piece.name;
-        this.piece = placePieceOnGrid(
-          this.board.width,
-          this.board.height,
-          this.queuePieceName
-        );
-        this.queuePieceName = _.sample(Object.keys(pieces));
+        this.piece = this.getPieceByName(this.queuePieceName);
+        this.queuePieceName = getRandomPieceName();
       } else {
         const pieceCopy = this.piece;
-        this.piece = placePieceOnGrid(
-          this.board.width,
-          this.board.height,
-          this.heldPieceName
-        );
+        this.piece = this.getPieceByName(this.heldPieceName);
         this.heldPieceName = pieceCopy.name;
       }
     }
@@ -126,6 +119,7 @@ class GameV2 {
 
   async run() {
     this.runViewUpdate();
+    this.start = true;
     this.pause = false;
 
     await this.wait(1000);
@@ -136,6 +130,9 @@ class GameV2 {
       }
       await this.wait(this.delay);
     }
+
+    this.start = false;
+    this.runViewUpdate();
 
     console.log("game over");
   }

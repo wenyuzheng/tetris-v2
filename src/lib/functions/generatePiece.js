@@ -94,8 +94,10 @@ import pieces from "../constants/Pieces";
 //   return piece;
 // };
 
+export const getRandomPieceName = () => _.sample(Object.keys(pieces));
+
 const generatePiece = (width, height) => {
-  const pieceName = _.sample(Object.keys(pieces));
+  const pieceName = getRandomPieceName();
   return placePieceOnGrid(width, height, pieceName);
 };
 
