@@ -13,7 +13,11 @@ const game = new GameV2(
 );
 
 function App() {
-  const [viewData, setViewData] = useState({ board: {}, holdPiece: {} });
+  const [viewData, setViewData] = useState({
+    board: {},
+    holdPiece: {},
+    queue: {},
+  });
   useEffect(() => {
     game.viewUpdater = setViewData;
   }, []);
@@ -23,7 +27,8 @@ function App() {
       <h1>Tetris</h1>
       <div style={{ display: "flex" }}>
         <div style={{ marginRight: 20 }}>
-          <Grid width={4} height={4} viewData={viewData["holdPiece"]} />
+          <h3>Hold</h3>
+          <Grid width={4} height={3} viewData={viewData["holdPiece"]} />
         </div>
         <div>
           <Grid
@@ -31,6 +36,10 @@ function App() {
             height={board.height}
             viewData={viewData["board"]}
           />
+        </div>
+        <div style={{ marginLeft: 20 }}>
+          <h3>Queue</h3>
+          <Grid width={4} height={3} viewData={viewData["queue"]} />
         </div>
       </div>
       <div style={{ margin: 20 }}>

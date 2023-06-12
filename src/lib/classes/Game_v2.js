@@ -3,6 +3,7 @@ import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
+import pieces from "../constants/Pieces";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -10,7 +11,8 @@ class GameV2 {
     this.board = board;
     this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
-    this.heldPiece = null;
+    this.queuePieceName = _.sample(Object.keys(pieces));
+    this.heldPieceName = null;
     this.isPieceSwapped = false;
     this.pause = true;
   }
@@ -51,7 +53,12 @@ class GameV2 {
       this.board.removeFullRows();
       this.runViewUpdate();
 
-      this.piece = this.pieceGenerator();
+      this.piece = placePieceOnGrid(
+        this.board.width,
+        this.board.height,
+        this.queuePieceName
+      );
+      this.queuePieceName = _.sample(Object.keys(pieces));
       this.isPieceSwapped = false;
       this.runViewUpdate();
     }
@@ -64,17 +71,22 @@ class GameV2 {
 
   swapHoldPiece() {
     if (!this.isPieceSwapped) {
-      if (this.heldPiece === null) {
-        this.heldPiece = this.piece.name;
-        this.piece = this.pieceGenerator();
+      if (this.heldPieceName === null) {
+        this.heldPieceName = this.piece.name;
+        this.piece = placePieceOnGrid(
+          this.board.width,
+          this.board.height,
+          this.queuePieceName
+        );
+        this.queuePieceName = _.sample(Object.keys(pieces));
       } else {
         const pieceCopy = this.piece;
         this.piece = placePieceOnGrid(
           this.board.width,
           this.board.height,
-          this.heldPiece
+          this.heldPieceName
         );
-        this.heldPiece = pieceCopy.name;
+        this.heldPieceName = pieceCopy.name;
       }
     }
     this.isPieceSwapped = true;
@@ -82,16 +94,22 @@ class GameV2 {
   }
 
   compileViewData() {
-    let result = { board: {}, holdPiece: {} };
+    let result = { board: {}, holdPiece: {}, queue: {} };
     this.board.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
     this.piece.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
-    if (this.heldPiece) {
-      const piece = placePieceOnGrid(4, 4, this.heldPiece);
-      piece.cells.forEach(
+
+    const queuePiece = placePieceOnGrid(4, 3, this.queuePieceName);
+    queuePiece.cells.forEach(
+      (cell) => (result["queue"][`${cell.x}-${cell.y}`] = cell.color)
+    );
+
+    if (this.heldPieceName) {
+      const heldPiece = placePieceOnGrid(4, 3, this.heldPieceName);
+      heldPiece.cells.forEach(
         (cell) => (result["holdPiece"][`${cell.x}-${cell.y}`] = cell.color)
       );
     }
