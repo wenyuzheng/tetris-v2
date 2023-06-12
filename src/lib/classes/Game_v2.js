@@ -8,8 +8,8 @@ class GameV2 {
     this.board = board;
     this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
-
     this.delay = delay;
+    this.pause = true;
   }
 
   wait(delay) {
@@ -33,7 +33,6 @@ class GameV2 {
       let outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
       while (outOfBoard !== false) {
         this.piece.move(outOfBoard);
-        // console.log({ outOfBoard }, this.piece.cells);
         outOfBoard = pieceOutOfBoardDirection(this.piece, this.board);
       }
       this.runViewUpdate();
@@ -42,7 +41,7 @@ class GameV2 {
 
   runPiece() {
     this.movePiece("down");
-    console.log("aftermove", this.piece.cells);
+    // console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
@@ -72,12 +71,20 @@ class GameV2 {
     }
   }
 
+  pauseGame() {
+    this.pause = !this.pause;
+  }
+
   async run() {
     this.runViewUpdate();
+    this.pause = false;
 
     await this.wait(1000);
+
     while (!isGameOver(this.piece, this.board)) {
-      this.runPiece();
+      if (!this.pause) {
+        this.runPiece();
+      }
       await this.wait(this.delay);
     }
 

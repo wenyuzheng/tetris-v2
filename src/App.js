@@ -26,6 +26,13 @@ function App() {
       <div style={{ margin: 20 }}>
         <button
           onClick={() => {
+            game.pauseGame();
+          }}
+        >
+          pause
+        </button>
+        <button
+          onClick={() => {
             game.run();
           }}
         >
