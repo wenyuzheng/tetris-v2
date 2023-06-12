@@ -3,11 +3,10 @@ import Piece from "../classes/Piece";
 import pieces from "../constants/Pieces";
 import getPiecePositionsOnGrid from "./getPiecePositionsOnGrid";
 
-const generatePiece2 = (width, height) => {
-  const pieceName = _.sample(Object.keys(pieces));
+const placePieceOnGrid = (width, height, pieceName) => {
   const positions = getPiecePositionsOnGrid(width, height, pieceName);
   const piece = pieces[pieceName];
-  return new Piece(positions, piece.color, piece.centerIndex);
+  return new Piece(positions, piece.color, piece.centerIndex, pieceName);
 };
 
-export default generatePiece2;
+export default placePieceOnGrid;

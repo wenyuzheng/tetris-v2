@@ -2,6 +2,7 @@ import _ from "lodash";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
+import placePieceOnGrid from "../functions/placePieceOnGrid";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -64,12 +65,16 @@ class GameV2 {
   swapHoldPiece() {
     if (!this.isPieceSwapped) {
       if (this.heldPiece === null) {
-        this.heldPiece = this.piece;
+        this.heldPiece = this.piece.name;
         this.piece = this.pieceGenerator();
       } else {
         const pieceCopy = this.piece;
-        this.piece = this.heldPiece;
-        this.heldPiece = pieceCopy;
+        this.piece = placePieceOnGrid(
+          this.board.width,
+          this.board.height,
+          this.heldPiece
+        );
+        this.heldPiece = pieceCopy.name;
       }
     }
     this.isPieceSwapped = true;
@@ -84,12 +89,12 @@ class GameV2 {
     this.piece.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
-    if (this.heldPiece)
-      this.heldPiece.cells.forEach(
+    if (this.heldPiece) {
+      const piece = placePieceOnGrid(4, 4, this.heldPiece);
+      piece.cells.forEach(
         (cell) => (result["holdPiece"][`${cell.x}-${cell.y}`] = cell.color)
       );
-
-    console.log({ result });
+    }
 
     return result;
   }

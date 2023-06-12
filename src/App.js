@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Board from "./lib/classes/Board";
-import Game from "./lib/classes/Game";
 import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
@@ -22,13 +21,17 @@ function App() {
   return (
     <div className="App">
       <h1>Tetris</h1>
-      <div>
-        <Grid
-          width={board.width}
-          height={board.height}
-          viewData={viewData["board"]}
-        />
-        <Grid width={4} height={4} viewData={viewData["holdPiece"]} />
+      <div style={{ display: "flex" }}>
+        <div style={{ marginRight: 20 }}>
+          <Grid width={4} height={4} viewData={viewData["holdPiece"]} />
+        </div>
+        <div>
+          <Grid
+            width={board.width}
+            height={board.height}
+            viewData={viewData["board"]}
+          />
+        </div>
       </div>
       <div style={{ margin: 20 }}>
         <button

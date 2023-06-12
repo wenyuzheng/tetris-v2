@@ -1,11 +1,10 @@
 import _ from "lodash";
-import generatePiece2 from "../../../lib/functions/generatePiece2";
+import placePieceOnGrid from "../../../lib/functions/placePieceOnGrid";
 import Piece from "../../../lib/classes/Piece";
 
-describe("generatePiece2", () => {
+describe("placePieceOnGrid", () => {
   test("eg 1", () => {
-    _.sample = (array) => array[0];
-    const result = generatePiece2(10, 20);
+    const result = placePieceOnGrid(10, 20, "square");
     const expected = new Piece(
       [
         [4, 19],
@@ -13,7 +12,9 @@ describe("generatePiece2", () => {
         [4, 18],
         [5, 18],
       ],
-      "red"
+      "red",
+      undefined,
+      "square"
     );
     expect(result).toEqual(expected);
   });

@@ -2,7 +2,8 @@ import _ from "lodash";
 import Cell from "./Cell";
 
 class Piece {
-  constructor(positionArr, color, centerIndex) {
+  constructor(positionArr, color, centerIndex, name) {
+    this.name = name;
     this.cells = positionArr.map((pos) => new Cell(pos[0], pos[1], color));
     this.centerIndex = centerIndex;
   }
