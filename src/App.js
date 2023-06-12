@@ -29,7 +29,7 @@ function App() {
             game.pauseGame();
           }}
         >
-          pause
+          {game.pause ? "resume" : "pause"}
         </button>
         <button
           onClick={() => {

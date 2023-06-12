@@ -5,10 +5,12 @@ import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
+    this.delay = delay;
     this.board = board;
     this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
-    this.delay = delay;
+    this.heldPiece = null;
+    this.isPieceSwapped = false;
     this.pause = true;
   }
 
@@ -49,8 +51,28 @@ class GameV2 {
       this.runViewUpdate();
 
       this.piece = this.pieceGenerator();
+      this.isPieceSwapped = false;
       this.runViewUpdate();
     }
+  }
+
+  pauseGame() {
+    this.pause = !this.pause;
+    this.runViewUpdate();
+  }
+
+  swapHoldPiece() {
+    if (!this.isPieceSwapped) {
+      if (this.heldPiece === null) {
+        this.heldPiece = this.piece;
+        this.piece = this.pieceGenerator();
+      } else {
+        const pieceCopy = this.piece;
+        this.piece = this.heldPiece;
+        this.heldPiece = pieceCopy;
+      }
+    }
+    this.isPieceSwapped = true;
   }
 
   compileViewData() {
@@ -69,10 +91,6 @@ class GameV2 {
       const newViewData = this.compileViewData();
       this.viewUpdater(newViewData);
     }
-  }
-
-  pauseGame() {
-    this.pause = !this.pause;
   }
 
   async run() {
