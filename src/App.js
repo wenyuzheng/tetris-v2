@@ -14,7 +14,7 @@ const game = new GameV2(
 );
 
 function App() {
-  const [viewData, setViewData] = useState([]);
+  const [viewData, setViewData] = useState({ board: {}, holdPiece: {} });
   useEffect(() => {
     game.viewUpdater = setViewData;
   }, []);
@@ -22,7 +22,14 @@ function App() {
   return (
     <div className="App">
       <h1>Tetris</h1>
-      <Grid width={board.width} height={board.height} viewData={viewData} />
+      <div>
+        <Grid
+          width={board.width}
+          height={board.height}
+          viewData={viewData["board"]}
+        />
+        <Grid width={4} height={4} viewData={viewData["holdPiece"]} />
+      </div>
       <div style={{ margin: 20 }}>
         <button
           onClick={() => {
@@ -69,6 +76,13 @@ function App() {
           }}
         >
           rotate
+        </button>
+        <button
+          onClick={() => {
+            game.swapHoldPiece();
+          }}
+        >
+          hold
         </button>
       </div>
     </div>

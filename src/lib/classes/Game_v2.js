@@ -73,16 +73,24 @@ class GameV2 {
       }
     }
     this.isPieceSwapped = true;
+    this.runViewUpdate();
   }
 
   compileViewData() {
-    let result = {};
+    let result = { board: {}, holdPiece: {} };
     this.board.cells.forEach(
-      (cell) => (result[`${cell.x}-${cell.y}`] = cell.color)
+      (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
     this.piece.cells.forEach(
-      (cell) => (result[`${cell.x}-${cell.y}`] = cell.color)
+      (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
+    if (this.heldPiece)
+      this.heldPiece.cells.forEach(
+        (cell) => (result["holdPiece"][`${cell.x}-${cell.y}`] = cell.color)
+      );
+
+    console.log({ result });
+
     return result;
   }
 
