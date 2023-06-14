@@ -15,6 +15,8 @@ class GameV2 {
     this.isPieceSwapped = false;
     this.start = false;
     this.pause = true;
+    this.score = 0;
+    this.level = 1;
   }
 
   getPieceByName(pieceName) {
@@ -48,13 +50,22 @@ class GameV2 {
     }
   }
 
+  calculateScoreAndLevel(fullRowsNum) {
+    this.score += fullRowsNum * 100;
+    if (fullRowsNum !== 0 && this.score !== 0 && this.score % 500 === 0) {
+      this.level++;
+      if (this.delay > 100) this.delay -= 100;
+    }
+  }
+
   runPiece() {
     this.movePiece("down");
     // console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
-      this.board.removeFullRows();
+      const fullRowsNum = this.board.removeFullRows();
+      this.calculateScoreAndLevel(fullRowsNum);
       this.runViewUpdate();
 
       this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
@@ -96,7 +107,7 @@ class GameV2 {
 
     for (let i = 1; i <= this.queuePieceNameArr.length; i++) {
       const queueName = this.queuePieceNameArr[i - 1];
-      const queuePiece = placePieceOnGrid(4, 9, queueName, 3, i);
+      const queuePiece = placePieceOnGrid(4, 12, queueName, 3, i);
       queuePiece.cells.forEach(
         (cell) => (result["queue"][`${cell.x}-${cell.y}`] = cell.color)
       );

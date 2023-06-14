@@ -54,9 +54,24 @@ function App() {
     <div className="App">
       <h1>Tetris</h1>
       <div style={{ display: "flex" }}>
-        <div style={{ marginRight: 20 }}>
-          <h3>Hold</h3>
-          <Grid width={4} height={3} viewData={viewData["holdPiece"]} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            marginRight: 20,
+          }}
+        >
+          <div>
+            <h3>Hold</h3>
+            <Grid width={4} height={3} viewData={viewData["holdPiece"]} />
+          </div>
+          <div style={{ border: "2px black solid" }}>
+            <h3>Score</h3>
+            <h4>{game.score}</h4>
+            <h3>Level</h3>
+            <h4>{game.level}</h4>
+          </div>
         </div>
         <div>
           <Grid
@@ -67,7 +82,7 @@ function App() {
         </div>
         <div style={{ marginLeft: 20 }}>
           <h3>Queue</h3>
-          <Grid width={4} height={9} viewData={viewData["queue"]} />
+          <Grid width={4} height={12} viewData={viewData["queue"]} />
         </div>
       </div>
       <div style={{ margin: 20 }}>

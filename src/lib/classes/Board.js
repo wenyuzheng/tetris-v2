@@ -19,6 +19,7 @@ class Board {
   }
 
   removeFullRows() {
+    let fullRowsNum = 0;
     let counter = 0;
     let cellNum = this.cells.filter((cell) => cell.y === counter).length;
 
@@ -26,10 +27,13 @@ class Board {
       cellNum = this.cells.filter((cell) => cell.y === counter).length;
       if (cellNum === this.width) {
         this.removeSingleFullRow(counter);
+        fullRowsNum++;
       } else {
         counter++;
       }
     }
+
+    return fullRowsNum;
   }
 
   isPositionValid(x, y) {
