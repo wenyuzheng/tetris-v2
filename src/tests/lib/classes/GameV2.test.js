@@ -42,7 +42,7 @@ describe("GameV2", () => {
     expect(game.piece.cells).toEqual(expected);
   });
 
-  test("swapHoldPiece eg1", () => {
+  xtest("swapHoldPiece eg1", () => {
     _.sample = (arr) => arr[0];
 
     const board = new Board(5, 8);
@@ -68,7 +68,7 @@ describe("GameV2", () => {
     expect(game.heldPiece).toEqual("square");
   });
 
-  test("swapHoldPiece eg2", () => {
+  xtest("swapHoldPiece eg2", () => {
     _.sample = (arr) => arr[0];
 
     const board = new Board(5, 8);

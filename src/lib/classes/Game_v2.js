@@ -9,9 +9,8 @@ class GameV2 {
   constructor(board, pieceGenerator, delay) {
     this.delay = delay;
     this.board = board;
-    // this.pieceGenerator = pieceGenerator;
     this.piece = pieceGenerator();
-    this.queuePieceName = getRandomPieceName();
+    this.queuePieceNameArr = Array.from({ length: 3 }, getRandomPieceName);
     this.heldPieceName = null;
     this.isPieceSwapped = false;
     this.start = false;
@@ -58,8 +57,8 @@ class GameV2 {
       this.board.removeFullRows();
       this.runViewUpdate();
 
-      this.piece = this.getPieceByName(this.queuePieceName);
-      this.queuePieceName = getRandomPieceName();
+      this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
+      this.queuePieceNameArr.unshift(getRandomPieceName());
       this.isPieceSwapped = false;
       this.runViewUpdate();
     }
@@ -74,8 +73,8 @@ class GameV2 {
     if (!this.isPieceSwapped) {
       if (this.heldPieceName === null) {
         this.heldPieceName = this.piece.name;
-        this.piece = this.getPieceByName(this.queuePieceName);
-        this.queuePieceName = getRandomPieceName();
+        this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
+        this.queuePieceNameArr.unshift(getRandomPieceName());
       } else {
         const pieceCopy = this.piece;
         this.piece = this.getPieceByName(this.heldPieceName);
@@ -95,10 +94,13 @@ class GameV2 {
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
     );
 
-    const queuePiece = placePieceOnGrid(4, 3, this.queuePieceName);
-    queuePiece.cells.forEach(
-      (cell) => (result["queue"][`${cell.x}-${cell.y}`] = cell.color)
-    );
+    for (let i = 1; i <= this.queuePieceNameArr.length; i++) {
+      const queueName = this.queuePieceNameArr[i - 1];
+      const queuePiece = placePieceOnGrid(4, 9, queueName, 3, i);
+      queuePiece.cells.forEach(
+        (cell) => (result["queue"][`${cell.x}-${cell.y}`] = cell.color)
+      );
+    }
 
     if (this.heldPieceName) {
       const heldPiece = placePieceOnGrid(4, 3, this.heldPieceName);

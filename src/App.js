@@ -67,7 +67,7 @@ function App() {
         </div>
         <div style={{ marginLeft: 20 }}>
           <h3>Queue</h3>
-          <Grid width={4} height={3} viewData={viewData["queue"]} />
+          <Grid width={4} height={9} viewData={viewData["queue"]} />
         </div>
       </div>
       <div style={{ margin: 20 }}>
