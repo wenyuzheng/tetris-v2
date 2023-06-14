@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import Board from "./lib/classes/Board";
 import GameV2 from "./lib/classes/Game_v2";
@@ -27,6 +27,28 @@ function App() {
   const longPressLeft = useLongPress(() => game.movePiece("left"), 100);
   const longPressRight = useLongPress(() => game.movePiece("right"), 100);
   const longPressRotate = useLongPress(() => game.rotatePiece(), 100);
+
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === "ArrowDown") {
+      game.movePiece("down");
+    } else if (e.key === "ArrowRight") {
+      game.movePiece("right");
+    } else if (e.key === "ArrowLeft") {
+      game.movePiece("left");
+    } else if (e.key === "ArrowUp") {
+      game.rotatePiece();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (game.start) {
+      document.addEventListener("keydown", handleKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress, game.start]);
 
   return (
     <div className="App">
