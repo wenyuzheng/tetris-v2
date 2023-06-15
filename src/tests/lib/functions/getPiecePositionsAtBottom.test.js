@@ -66,11 +66,10 @@ describe("getPiecePositionsAtBottom", () => {
       [4, 2],
       [3, 2],
     ];
-    console.log({ result });
     expect(result).toEqual(expected);
   });
 
-  test("eg 4", () => {
+  test("eg 5", () => {
     const board = new Board(5, 8, [new Cell(3, 0), new Cell(3, 1)]);
     const piece = new Piece(
       [
@@ -89,6 +88,22 @@ describe("getPiecePositionsAtBottom", () => {
       [3, 4],
       [4, 3],
       [3, 2],
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("eg 6", () => {
+    const board = new Board(5, 8, [new Cell(3, 0), new Cell(3, 1)]);
+    const piece = new Piece([
+      [3, 7],
+      [2, 7],
+      [2, 6],
+    ]);
+    const result = getPiecePositionsAtBottom(piece, board);
+    const expected = [
+      [3, 2],
+      [2, 2],
+      [2, 1],
     ];
     console.log({ result });
     expect(result).toEqual(expected);

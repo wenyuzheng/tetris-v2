@@ -4,6 +4,7 @@ import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
 import { getRandomPieceName } from "../functions/generatePiece";
+import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -98,8 +99,13 @@ class GameV2 {
 
   compileViewData() {
     let result = { board: {}, holdPiece: {}, queue: {} };
+
     this.board.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
+    );
+    const bottomPositions = getPiecePositionsAtBottom(this.piece, this.board);
+    bottomPositions.forEach(
+      (e) => (result["board"][`${e[0]}-${e[1]}`] = "white")
     );
     this.piece.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
