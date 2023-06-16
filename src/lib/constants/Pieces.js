@@ -3,12 +3,12 @@ const square = {
     [1, 1],
     [1, 1],
   ],
-  color: "red",
+  color: "#ffff00",
 };
 
 const tube = {
   shape: [[1, 1, 1, 1]],
-  color: "blue",
+  color: "#00ffff",
   centerIndex: 1,
 };
 
@@ -18,7 +18,7 @@ const leftL = {
     [1, 0],
     [1, 1],
   ],
-  color: "orange",
+  color: "#ff7f00",
   centerIndex: 1,
 };
 
@@ -28,7 +28,7 @@ const rightL = {
     [0, 1],
     [1, 1],
   ],
-  color: "green",
+  color: "#0000ff",
   centerIndex: 1,
 };
 
@@ -37,7 +37,7 @@ const hat = {
     [0, 1, 0],
     [1, 1, 1],
   ],
-  color: "purple",
+  color: "#800080",
   centerIndex: 2,
 };
 
@@ -46,7 +46,7 @@ const leftStep = {
     [0, 1, 1],
     [1, 1, 0],
   ],
-  color: "yellow",
+  color: "#00ff00",
   centerIndex: 1,
 };
 
@@ -55,7 +55,7 @@ const rightStep = {
     [1, 1, 0],
     [0, 1, 1],
   ],
-  color: "cyan",
+  color: "#ff0000",
   centerIndex: 1,
 };
 

@@ -19,8 +19,11 @@ function App() {
     holdPiece: {},
     queue: {},
   });
+  const [highlightRows, setHighlightRows] = useState([]);
+
   useEffect(() => {
     game.viewUpdater = setViewData;
+    game.highlightUpdater = setHighlightRows;
   }, []);
 
   const longPressDown = useLongPress(() => game.movePiece("down"), 100);
@@ -78,6 +81,7 @@ function App() {
             width={board.width}
             height={board.height}
             viewData={viewData["board"]}
+            highlightRows={highlightRows}
           />
         </div>
         <div style={{ marginLeft: 20 }}>

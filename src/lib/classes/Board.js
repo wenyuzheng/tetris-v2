@@ -11,6 +11,21 @@ class Board {
     this.cells.push(...cells);
   }
 
+  getFullRows() {
+    let fullRows = [];
+    let counter = 0;
+    let cellNum = this.cells.filter((cell) => cell.y === counter).length;
+    while (cellNum !== 0) {
+      if (cellNum === this.width) {
+        fullRows.push(counter);
+      }
+      counter++;
+      cellNum = this.cells.filter((cell) => cell.y === counter).length;
+    }
+
+    return fullRows;
+  }
+
   removeSingleFullRow(row) {
     this.cells = this.cells.filter((cell) => cell.y !== row);
     this.cells.forEach((cell) => {
@@ -19,21 +34,8 @@ class Board {
   }
 
   removeFullRows() {
-    let fullRowsNum = 0;
-    let counter = 0;
-    let cellNum = this.cells.filter((cell) => cell.y === counter).length;
-
-    while (cellNum !== 0) {
-      cellNum = this.cells.filter((cell) => cell.y === counter).length;
-      if (cellNum === this.width) {
-        this.removeSingleFullRow(counter);
-        fullRowsNum++;
-      } else {
-        counter++;
-      }
-    }
-
-    return fullRowsNum;
+    const fullRows = this.getFullRows();
+    fullRows.reverse().forEach((row) => this.removeSingleFullRow(row));
   }
 
   isPositionValid(x, y) {

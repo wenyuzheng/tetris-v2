@@ -59,14 +59,20 @@ class GameV2 {
     }
   }
 
-  runPiece() {
+  async runPiece() {
+    await this.wait(200);
     this.movePiece("down");
     // console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
-      const fullRowsNum = this.board.removeFullRows();
-      this.calculateScoreAndLevel(fullRowsNum);
+      const fullRows = this.board.getFullRows();
+      this.highlightUpdater(fullRows);
+      await this.wait(200);
+
+      this.board.removeFullRows();
+      this.calculateScoreAndLevel(fullRows.length);
+      this.highlightUpdater([]);
       this.runViewUpdate();
 
       this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
