@@ -1,12 +1,15 @@
 import "./Square.css";
 
-const Square = ({ color, isHighlight }) => {
+const Square = ({ color, isHighlight, isGhost }) => {
   const classname = isHighlight && color ? "flashHighlight" : "";
 
   return (
     <div
       className={classname}
-      style={{ backgroundColor: color ? color : "#3a3b3c" }}
+      style={{
+        backgroundColor: color,
+        border: isGhost ? "1px solid white" : null,
+      }}
     />
   );
 };

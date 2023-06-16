@@ -111,7 +111,7 @@ class GameV2 {
     );
     const bottomPositions = getPiecePositionsAtBottom(this.piece, this.board);
     bottomPositions.forEach(
-      (e) => (result["board"][`${e[0]}-${e[1]}`] = "white")
+      (e) => (result["board"][`${e[0]}-${e[1]}`] = "ghost")
     );
     this.piece.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)

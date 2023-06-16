@@ -23,11 +23,13 @@ const Grid = ({ width, height, viewData, highlightRows = [] }) => {
     <StyledGrid squareSize={squareSize} width={width} height={height}>
       {xIndices.map((i) => {
         return yIndices.map((j) => {
+          const color = viewData[`${i}-${j}`];
           return (
             <Square
               key={`${i}-${j}}`}
-              color={viewData[`${i}-${j}`]}
+              color={color && color !== "ghost" ? color : "#3a3b3c"}
               isHighlight={highlightRows.includes(j)}
+              isGhost={color === "ghost"}
             />
           );
         });
