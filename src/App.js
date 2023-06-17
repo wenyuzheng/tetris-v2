@@ -28,10 +28,7 @@ function App() {
   }, []);
 
   const swipeActions = useSwipe({
-    swipeLeft: (distance) => {
-      game.movePiece("left", distance);
-      console.log(distance);
-    },
+    swipeLeft: (distance) => game.movePiece("left", distance),
     swipeRight: (distance) => game.movePiece("right", distance),
     swipeDown: () => game.hardDropPiece(),
     swipeUp: () => game.swapHoldPiece(),

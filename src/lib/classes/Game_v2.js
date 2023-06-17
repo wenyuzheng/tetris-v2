@@ -5,7 +5,6 @@ import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
 import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
-import Piece from "./Piece";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 
 class GameV2 {
@@ -36,23 +35,17 @@ class GameV2 {
     const maxDistance = getDistanceFromEdge(this.piece, this.board, direction);
     if (distance > maxDistance) distance = maxDistance;
 
-    for (let i = 0; i < distance; i++) {
+    for (let i = 1; i <= distance; i++) {
       const position = this.piece.getPositionAfterMove(direction);
       if (!this.board.isPositionArrayValid(position)) return;
+      this.piece.move(direction);
+      this.runViewUpdate();
     }
-
-    this.piece.move(direction, distance);
-    this.runViewUpdate();
   }
 
   hardDropPiece() {
-    const position = getPiecePositionsAtBottom(this.piece, this.board);
-    this.piece = new Piece(
-      position,
-      this.piece.cells[0].color,
-      this.piece.centerIndex,
-      this.piece.name
-    );
+    this.movePiece("down", this.board.height);
+    this.runViewUpdate();
   }
 
   rotatePiece() {
@@ -78,7 +71,6 @@ class GameV2 {
 
   async runPiece() {
     this.movePiece("down");
-    // console.log("aftermove", this.piece.cells);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
