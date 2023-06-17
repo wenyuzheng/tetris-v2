@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 const isPieceAtBottom = (piece, board) => {
   const position = piece.getPositionAfterMove("down");
   const result = position.some((p) =>

@@ -21,10 +21,18 @@ function App() {
     queue: {},
   });
   const [highlightRows, setHighlightRows] = useState([]);
+  const [gameStart, setGameStart] = useState(false);
+  const [gamePause, setGamePause] = useState(true);
+  const [score, setScore] = useState(0);
+  const [level, setLevel] = useState(1);
 
   useEffect(() => {
     game.viewUpdater = setViewData;
     game.highlightUpdater = setHighlightRows;
+    game.setGameStart = setGameStart;
+    game.setGamePause = setGamePause;
+    game.setScore = setScore;
+    game.setLevel = setLevel;
   }, []);
 
   const swipeActions = useSwipe({
@@ -49,11 +57,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (game.start) {
+    if (gameStart) {
       document.addEventListener("keydown", handleKeyPress);
     }
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [handleKeyPress, game.start]);
+  }, [handleKeyPress, gameStart]);
 
   const windowSize = useWindowSize();
   const margin = windowSize.width <= 767 ? 10 : 20;
@@ -63,8 +71,8 @@ function App() {
   return (
     <div className="App" style={{ margin }}>
       <h1>Tetris</h1>
-      {game.start ? (
-        game.pause ? (
+      {gameStart ? (
+        gamePause ? (
           <button onClick={() => game.pauseGame()}>resume</button>
         ) : (
           <div style={{ display: "flex" }}>
@@ -91,9 +99,9 @@ function App() {
               </div>
               <div style={{ border: "2px black solid" }}>
                 <h3>Score</h3>
-                <h4>{game.score}</h4>
+                <h4>{score}</h4>
                 <h3>Level</h3>
-                <h4>{game.level}</h4>
+                <h4>{level}</h4>
               </div>
             </div>
             <div {...swipeActions} onClick={() => game.rotatePiece()}>

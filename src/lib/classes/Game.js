@@ -1,4 +1,3 @@
-import _ from "lodash";
 import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
@@ -15,7 +14,6 @@ class GameV2 {
     this.queuePieceNameArr = Array.from({ length: 3 }, getRandomPieceName);
     this.heldPieceName = null;
     this.isPieceSwapped = false;
-    this.start = false;
     this.pause = true;
     this.score = 0;
     this.level = 1;
@@ -63,8 +61,10 @@ class GameV2 {
 
   calculateScoreAndLevel(fullRowsNum) {
     this.score += fullRowsNum * 100;
+    this.setScore(this.score);
     if (fullRowsNum !== 0 && this.score !== 0 && this.score % 500 === 0) {
       this.level++;
+      this.setLevel(this.level);
       if (this.delay > 100) this.delay -= 100;
     }
   }
@@ -92,6 +92,7 @@ class GameV2 {
 
   pauseGame() {
     this.pause = !this.pause;
+    this.setGamePause(this.pause);
     this.runViewUpdate();
   }
 
@@ -155,8 +156,9 @@ class GameV2 {
 
   async run() {
     this.runViewUpdate();
-    this.start = true;
+    this.setGameStart(true);
     this.pause = false;
+    this.setGamePause(this.pause);
 
     await this.wait(1000);
 
@@ -167,7 +169,7 @@ class GameV2 {
       await this.wait(this.delay);
     }
 
-    this.start = false;
+    this.setGameStart(false);
     this.runViewUpdate();
 
     console.log("game over");

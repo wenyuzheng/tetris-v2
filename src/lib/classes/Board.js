@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 class Board {
   constructor(width, height, cells = []) {
     this.height = height;
