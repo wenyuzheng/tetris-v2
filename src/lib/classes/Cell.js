@@ -5,20 +5,20 @@ class Cell {
     this.color = color;
   }
 
-  moveDown() {
-    this.y--;
+  moveDown(distance = 1) {
+    this.y -= distance;
   }
 
-  moveLeft() {
-    this.x--;
+  moveLeft(distance = 1) {
+    this.x -= distance;
   }
 
-  moveRight() {
-    this.x++;
+  moveRight(distance = 1) {
+    this.x += distance;
   }
 
-  moveUp() {
-    this.y++;
+  moveUp(distance = 1) {
+    this.y += distance;
   }
 
   rotateClockwise(center) {

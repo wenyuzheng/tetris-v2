@@ -8,19 +8,19 @@ class Piece {
     this.centerIndex = centerIndex;
   }
 
-  getPositionAfterMove(direction) {
+  getPositionAfterMove(direction, distance = 1) {
     const cellsCopy = _.cloneDeep(this.cells);
     switch (direction) {
       case "down":
-        cellsCopy.forEach((e) => e.moveDown());
+        cellsCopy.forEach((e) => e.moveDown(distance));
         break;
 
       case "right":
-        cellsCopy.forEach((e) => e.moveRight());
+        cellsCopy.forEach((e) => e.moveRight(distance));
         break;
 
       case "left":
-        cellsCopy.forEach((e) => e.moveLeft());
+        cellsCopy.forEach((e) => e.moveLeft(distance));
         break;
 
       case "rotate":
@@ -38,22 +38,22 @@ class Piece {
     return cellsCopy.map((e) => [e.x, e.y]);
   }
 
-  move(direction) {
+  move(direction, distance = 1) {
     switch (direction) {
       case "down":
-        this.cells.forEach((e) => e.moveDown());
+        this.cells.forEach((e) => e.moveDown(distance));
         break;
 
       case "right":
-        this.cells.forEach((e) => e.moveRight());
+        this.cells.forEach((e) => e.moveRight(distance));
         break;
 
       case "left":
-        this.cells.forEach((e) => e.moveLeft());
+        this.cells.forEach((e) => e.moveLeft(distance));
         break;
 
       case "up":
-        this.cells.forEach((e) => e.moveUp());
+        this.cells.forEach((e) => e.moveUp(distance));
         break;
 
       default:

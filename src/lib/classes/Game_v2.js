@@ -6,6 +6,7 @@ import placePieceOnGrid from "../functions/placePieceOnGrid";
 import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import Piece from "./Piece";
+import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -31,11 +32,16 @@ class GameV2 {
     });
   }
 
-  movePiece(direction) {
-    const position = this.piece.getPositionAfterMove(direction);
-    if (this.board.isPositionArrayValid(position)) {
-      this.piece.move(direction);
+  movePiece(direction, distance = 1) {
+    const maxDistance = getDistanceFromEdge(this.piece, this.board, direction);
+    if (distance > maxDistance) distance = maxDistance;
+
+    for (let i = 0; i < distance; i++) {
+      const position = this.piece.getPositionAfterMove(direction);
+      if (!this.board.isPositionArrayValid(position)) return;
     }
+
+    this.piece.move(direction, distance);
     this.runViewUpdate();
   }
 

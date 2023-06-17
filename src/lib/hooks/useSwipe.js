@@ -6,7 +6,7 @@ const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp }) => {
   const [vertiTouchStart, setVertiTouchStart] = useState(0);
   const [vertiTouchEnd, setVertiTouchEnd] = useState(0);
 
-  const minSwipeDistance = 50;
+  const minSwipeDistance = 40;
 
   const onTouchStart = (e) => {
     setHoriTouchEnd(0);
@@ -36,10 +36,12 @@ const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp }) => {
     const isUpSwipe = vertiDistance > minSwipeDistance;
     const isDownSwipe = vertiDistance < -minSwipeDistance;
 
+    const times = Math.floor(Math.abs(horiDistance / minSwipeDistance));
+
     if (isLeftSwipe) {
-      swipeLeft();
+      swipeLeft(times);
     } else if (isRightSwipe) {
-      swipeRight();
+      swipeRight(times);
     } else if (isDownSwipe) {
       swipeDown();
     } else if (isUpSwipe) {
