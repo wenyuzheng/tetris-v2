@@ -25,7 +25,7 @@ const Grid = ({ squareSize, width, height, viewData, highlightRows = [] }) => {
           return (
             <Square
               key={`${i}-${j}}`}
-              color={color ? color : "#3a3b3c"}
+              color={color && !color.ghost ? color : "#3a3b3c"}
               isHighlight={highlightRows.includes(j)}
               isGhost={color && color.ghost}
             />

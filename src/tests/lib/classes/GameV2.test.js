@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Board from "../../../lib/classes/Board";
 import Cell from "../../../lib/classes/Cell";
-import GameV2 from "../../../lib/classes/Game_v2";
+import GameV2 from "../../../lib/classes/Game";
 import Piece from "../../../lib/classes/Piece";
 import generatePiece from "../../../lib/functions/generatePiece";
 

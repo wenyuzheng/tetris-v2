@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import Board from "./lib/classes/Board";
-import GameV2 from "./lib/classes/Game_v2";
+import Game from "./lib/classes/Game";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 import useWindowSize from "./lib/hooks/useWindowSize";
 import useSwipe from "./lib/hooks/useSwipe";
 
-const board = new Board(10, 20);
-const game = new GameV2(
+let board = new Board(10, 20);
+let game = new Game(
   board,
   () => generatePiece(board.width, board.height),
   1000
@@ -63,63 +63,72 @@ function App() {
   return (
     <div className="App" style={{ margin }}>
       <h1>Tetris</h1>
-      <div style={{ display: "flex" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            marginRight: margin,
-          }}
-        >
-          <div
-            onClick={() => {
-              game.swapHoldPiece();
-            }}
-          >
-            <h3>Hold</h3>
-            <Grid
-              squareSize={squareSize}
-              width={4}
-              height={3}
-              viewData={viewData["holdPiece"]}
-            />
-          </div>
-          <div style={{ border: "2px black solid" }}>
-            <h3>Score</h3>
-            <h4>{game.score}</h4>
-            <h3>Level</h3>
-            <h4>{game.level}</h4>
-          </div>
-        </div>
-        <div {...swipeActions} onClick={() => game.rotatePiece()}>
-          <Grid
-            squareSize={squareSize}
-            width={board.width}
-            height={board.height}
-            viewData={viewData["board"]}
-            highlightRows={highlightRows}
-          />
-        </div>
-        <div style={{ marginLeft: margin }}>
-          <h3>Queue</h3>
-          <Grid
-            squareSize={squareSize}
-            width={4}
-            height={12}
-            viewData={viewData["queue"]}
-          />
-        </div>
-      </div>
-      <div style={{ margin: margin }}>
-        {game.start ? (
-          <button onClick={() => game.pauseGame()}>
-            {game.pause ? "resume" : "pause"}
-          </button>
+      {game.start ? (
+        game.pause ? (
+          <button onClick={() => game.pauseGame()}>resume</button>
         ) : (
-          <button onClick={() => game.run()}>start</button>
-        )}
-      </div>
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                marginRight: margin,
+              }}
+            >
+              <div
+                onClick={() => {
+                  game.swapHoldPiece();
+                }}
+              >
+                <h3>Hold</h3>
+                <Grid
+                  squareSize={squareSize}
+                  width={4}
+                  height={3}
+                  viewData={viewData["holdPiece"]}
+                />
+              </div>
+              <div style={{ border: "2px black solid" }}>
+                <h3>Score</h3>
+                <h4>{game.score}</h4>
+                <h3>Level</h3>
+                <h4>{game.level}</h4>
+              </div>
+            </div>
+            <div {...swipeActions} onClick={() => game.rotatePiece()}>
+              <Grid
+                squareSize={squareSize}
+                width={board.width}
+                height={board.height}
+                viewData={viewData["board"]}
+                highlightRows={highlightRows}
+              />
+            </div>
+            <div
+              style={{
+                marginLeft: margin,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div>
+                <h3>Queue</h3>
+                <Grid
+                  squareSize={squareSize}
+                  width={4}
+                  height={12}
+                  viewData={viewData["queue"]}
+                />
+              </div>
+              <button onClick={() => game.pauseGame()}>Pause</button>
+            </div>
+          </div>
+        )
+      ) : (
+        <button onClick={() => game.run()}>start</button>
+      )}
     </div>
   );
 }
