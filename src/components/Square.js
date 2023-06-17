@@ -8,7 +8,7 @@ const Square = ({ color, isHighlight, isGhost }) => {
       className={classname}
       style={{
         backgroundColor: color,
-        border: isGhost ? "1px solid white" : null,
+        border: isGhost ? `1px solid ${isGhost}` : null,
       }}
     />
   );
