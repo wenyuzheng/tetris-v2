@@ -5,6 +5,7 @@ import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
 import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
+import Piece from "./Piece";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -38,6 +39,16 @@ class GameV2 {
     this.runViewUpdate();
   }
 
+  hardDropPiece() {
+    const position = getPiecePositionsAtBottom(this.piece, this.board);
+    this.piece = new Piece(
+      position,
+      this.piece.cells[0].color,
+      this.piece.centerIndex,
+      this.piece.name
+    );
+  }
+
   rotatePiece() {
     const position = this.piece.getPositionAfterMove("rotate");
     if (this.board.areRotatePositionsValid(position)) {
@@ -60,7 +71,6 @@ class GameV2 {
   }
 
   async runPiece() {
-    await this.wait(200);
     this.movePiece("down");
     // console.log("aftermove", this.piece.cells);
 

@@ -41,6 +41,8 @@ function App() {
       game.movePiece("left");
     } else if (e.key === "ArrowUp") {
       game.rotatePiece();
+    } else if (e.key === " ") {
+      game.hardDropPiece();
     }
   }, []);
 
@@ -71,7 +73,11 @@ function App() {
             marginRight: margin,
           }}
         >
-          <div>
+          <div
+            onClick={() => {
+              game.swapHoldPiece();
+            }}
+          >
             <h3>Hold</h3>
             <Grid
               squareSize={squareSize}
@@ -143,19 +149,19 @@ function App() {
                   down
                 </button>
                 <button
+                  onClick={() => {
+                    game.hardDropPiece();
+                  }}
+                >
+                  hard
+                </button>
+                <button
                   {...longPressRotate}
                   onClick={() => {
                     game.rotatePiece();
                   }}
                 >
                   rotate
-                </button>
-                <button
-                  onClick={() => {
-                    game.swapHoldPiece();
-                  }}
-                >
-                  hold
                 </button>
               </div>
             )}
