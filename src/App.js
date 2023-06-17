@@ -4,8 +4,8 @@ import Board from "./lib/classes/Board";
 import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
-import useLongPress from "./lib/hooks/useLongPress";
 import useWindowSize from "./lib/hooks/useWindowSize";
+import useSwipe from "./lib/hooks/useSwipe";
 
 const board = new Board(10, 20);
 const game = new GameV2(
@@ -27,10 +27,12 @@ function App() {
     game.highlightUpdater = setHighlightRows;
   }, []);
 
-  const longPressDown = useLongPress(() => game.movePiece("down"), 100);
-  const longPressLeft = useLongPress(() => game.movePiece("left"), 100);
-  const longPressRight = useLongPress(() => game.movePiece("right"), 100);
-  const longPressRotate = useLongPress(() => game.rotatePiece(), 100);
+  const swipeActions = useSwipe({
+    swipeLeft: () => game.movePiece("left"),
+    swipeRight: () => game.movePiece("right"),
+    swipeDown: () => game.hardDropPiece(),
+    swipeUp: () => game.swapHoldPiece(),
+  });
 
   const handleKeyPress = useCallback((e) => {
     if (e.key === "ArrowDown") {
@@ -50,10 +52,7 @@ function App() {
     if (game.start) {
       document.addEventListener("keydown", handleKeyPress);
     }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
+    return () => document.removeEventListener("keydown", handleKeyPress);
   }, [handleKeyPress, game.start]);
 
   const windowSize = useWindowSize();
@@ -93,7 +92,7 @@ function App() {
             <h4>{game.level}</h4>
           </div>
         </div>
-        <div>
+        <div {...swipeActions} onClick={() => game.rotatePiece()}>
           <Grid
             squareSize={squareSize}
             width={board.width}
@@ -114,66 +113,11 @@ function App() {
       </div>
       <div style={{ margin: margin }}>
         {game.start ? (
-          <div>
-            <button
-              onClick={() => {
-                game.pauseGame();
-              }}
-            >
-              {game.pause ? "resume" : "pause"}
-            </button>
-            {game.pause ? null : (
-              <div style={{ marginTop: 10 }}>
-                <button
-                  {...longPressLeft}
-                  onClick={() => {
-                    game.movePiece("left");
-                  }}
-                >
-                  left
-                </button>
-                <button
-                  {...longPressRight}
-                  onClick={() => {
-                    game.movePiece("right");
-                  }}
-                >
-                  right
-                </button>
-                <button
-                  {...longPressDown}
-                  onClick={() => {
-                    game.movePiece("down");
-                  }}
-                >
-                  down
-                </button>
-                <button
-                  onClick={() => {
-                    game.hardDropPiece();
-                  }}
-                >
-                  hard
-                </button>
-                <button
-                  {...longPressRotate}
-                  onClick={() => {
-                    game.rotatePiece();
-                  }}
-                >
-                  rotate
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <button
-            onClick={() => {
-              game.run();
-            }}
-          >
-            start
+          <button onClick={() => game.pauseGame()}>
+            {game.pause ? "resume" : "pause"}
           </button>
+        ) : (
+          <button onClick={() => game.run()}>start</button>
         )}
       </div>
     </div>
