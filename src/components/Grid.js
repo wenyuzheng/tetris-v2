@@ -13,9 +13,7 @@ const StyledGrid = styled.div`
   grid-auto-flow: column;
 `;
 
-const Grid = ({ width, height, viewData, highlightRows = [] }) => {
-  const squareSize = 30;
-
+const Grid = ({ squareSize, width, height, viewData, highlightRows = [] }) => {
   const xIndices = [...Array(width).keys()];
   const yIndices = [...Array(height).keys()].reverse();
 

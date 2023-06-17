@@ -5,6 +5,7 @@ import GameV2 from "./lib/classes/Game_v2";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 import useLongPress from "./lib/hooks/useLongPress";
+import useWindowSize from "./lib/hooks/useWindowSize";
 
 const board = new Board(10, 20);
 const game = new GameV2(
@@ -53,8 +54,13 @@ function App() {
     };
   }, [handleKeyPress, game.start]);
 
+  const windowSize = useWindowSize();
+  const margin = windowSize.width <= 767 ? 10 : 20;
+  const squareSize =
+    windowSize.width >= 1024 ? 30 : (windowSize.width - margin * 4) / 18;
+
   return (
-    <div className="App">
+    <div className="App" style={{ margin }}>
       <h1>Tetris</h1>
       <div style={{ display: "flex" }}>
         <div
@@ -62,12 +68,17 @@ function App() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            marginRight: 20,
+            marginRight: margin,
           }}
         >
           <div>
             <h3>Hold</h3>
-            <Grid width={4} height={3} viewData={viewData["holdPiece"]} />
+            <Grid
+              squareSize={squareSize}
+              width={4}
+              height={3}
+              viewData={viewData["holdPiece"]}
+            />
           </div>
           <div style={{ border: "2px black solid" }}>
             <h3>Score</h3>
@@ -78,18 +89,24 @@ function App() {
         </div>
         <div>
           <Grid
+            squareSize={squareSize}
             width={board.width}
             height={board.height}
             viewData={viewData["board"]}
             highlightRows={highlightRows}
           />
         </div>
-        <div style={{ marginLeft: 20 }}>
+        <div style={{ marginLeft: margin }}>
           <h3>Queue</h3>
-          <Grid width={4} height={12} viewData={viewData["queue"]} />
+          <Grid
+            squareSize={squareSize}
+            width={4}
+            height={12}
+            viewData={viewData["queue"]}
+          />
         </div>
       </div>
-      <div style={{ margin: 20 }}>
+      <div style={{ margin: margin }}>
         {game.start ? (
           <div>
             <button
