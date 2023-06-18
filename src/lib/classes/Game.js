@@ -14,6 +14,7 @@ class GameV2 {
     this.queuePieceNameArr = Array.from({ length: 3 }, getRandomPieceName);
     this.heldPieceName = null;
     this.isPieceSwapped = false;
+    this.highlightRows = [];
     this.pause = true;
     this.score = 0;
     this.level = 1;
@@ -74,13 +75,15 @@ class GameV2 {
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
-      const fullRows = this.board.getFullRows();
-      this.highlightUpdater(fullRows);
+      this.highlightRows = this.board.getFullRows();
+      console.log(this.highlightRows);
+      this.runViewUpdate();
+
       await this.wait(200);
 
       this.board.removeFullRows();
-      this.calculateScoreAndLevel(fullRows.length);
-      this.highlightUpdater([]);
+      this.calculateScoreAndLevel(this.highlightRows.length);
+      this.highlightRows = [];
       this.runViewUpdate();
 
       this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
@@ -113,7 +116,12 @@ class GameV2 {
   }
 
   compileViewData() {
-    let result = { board: {}, holdPiece: {}, queue: {} };
+    let result = {
+      board: {},
+      holdPiece: {},
+      queue: {},
+      highlight: this.highlightRows,
+    };
 
     this.board.cells.forEach(
       (cell) => (result["board"][`${cell.x}-${cell.y}`] = cell.color)
@@ -143,6 +151,8 @@ class GameV2 {
         (cell) => (result["holdPiece"][`${cell.x}-${cell.y}`] = cell.color)
       );
     }
+
+    console.log({ result });
 
     return result;
   }

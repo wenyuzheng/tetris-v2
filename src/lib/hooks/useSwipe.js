@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp }) => {
+const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp, tap }) => {
   const [horiTouchStart, setHoriTouchStart] = useState(0);
   const [horiTouchEnd, setHoriTouchEnd] = useState(0);
   const [vertiTouchStart, setVertiTouchStart] = useState(0);
@@ -53,6 +53,7 @@ const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp }) => {
     onTouchStart,
     onTouchMove,
     onTouchEnd,
+    onClick: tap,
   };
 };
 

@@ -19,8 +19,8 @@ function App() {
     board: {},
     holdPiece: {},
     queue: {},
+    highlight: [],
   });
-  const [highlightRows, setHighlightRows] = useState([]);
   const [gameStart, setGameStart] = useState(false);
   const [gamePause, setGamePause] = useState(true);
   const [score, setScore] = useState(0);
@@ -28,7 +28,6 @@ function App() {
 
   useEffect(() => {
     game.viewUpdater = setViewData;
-    game.highlightUpdater = setHighlightRows;
     game.setGameStart = setGameStart;
     game.setGamePause = setGamePause;
     game.setScore = setScore;
@@ -40,6 +39,7 @@ function App() {
     swipeRight: (distance) => game.movePiece("right", distance),
     swipeDown: () => game.hardDropPiece(),
     swipeUp: () => game.swapHoldPiece(),
+    tap: () => game.rotatePiece(),
   });
 
   const handleKeyPress = useCallback((e) => {
@@ -69,12 +69,7 @@ function App() {
     windowSize.width >= 1024 ? 30 : (windowSize.width - margin * 4) / 18;
 
   return (
-    <div
-      className="App"
-      style={{ margin, touchAction: "none" }}
-      {...swipeActions}
-      onClick={() => game.rotatePiece()}
-    >
+    <div className="App" {...swipeActions}>
       <h1>Tetris</h1>
       {gameStart ? (
         gamePause ? (
@@ -115,7 +110,7 @@ function App() {
                 width={board.width}
                 height={board.height}
                 viewData={viewData["board"]}
-                highlightRows={highlightRows}
+                highlightRows={viewData["highlight"]}
               />
             </div>
             <div
