@@ -76,7 +76,7 @@ class GameV2 {
       this.board.addCells(this.piece.cells);
       const fullRows = this.board.getFullRows();
       this.highlightUpdater(fullRows);
-      await this.wait(100);
+      await this.wait(200);
 
       this.board.removeFullRows();
       this.calculateScoreAndLevel(fullRows.length);

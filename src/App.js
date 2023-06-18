@@ -69,7 +69,12 @@ function App() {
     windowSize.width >= 1024 ? 30 : (windowSize.width - margin * 4) / 18;
 
   return (
-    <div className="App" style={{ margin }}>
+    <div
+      className="App"
+      style={{ margin, touchAction: "none" }}
+      {...swipeActions}
+      onClick={() => game.rotatePiece()}
+    >
       <h1>Tetris</h1>
       {gameStart ? (
         gamePause ? (
@@ -104,7 +109,7 @@ function App() {
                 <h4>{level}</h4>
               </div>
             </div>
-            <div {...swipeActions} onClick={() => game.rotatePiece()}>
+            <div>
               <Grid
                 squareSize={squareSize}
                 width={board.width}
