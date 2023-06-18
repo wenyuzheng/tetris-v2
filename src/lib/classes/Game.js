@@ -5,6 +5,7 @@ import placePieceOnGrid from "../functions/placePieceOnGrid";
 import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
+import Points from "../constants/Points";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
@@ -18,6 +19,7 @@ class GameV2 {
     this.pause = true;
     this.score = 0;
     this.level = 1;
+    this.lines = 0;
   }
 
   getPieceByName(pieceName) {
@@ -61,11 +63,13 @@ class GameV2 {
   }
 
   calculateScoreAndLevel(fullRowsNum) {
-    this.score += fullRowsNum * 100;
-    this.setScore(this.score);
-    if (fullRowsNum !== 0 && this.score !== 0 && this.score % 500 === 0) {
+    if (!fullRowsNum) return;
+
+    this.score += Points[fullRowsNum] * this.level;
+    this.lines += fullRowsNum;
+
+    if (this.lines !== 0 && this.lines % 10 === 0) {
       this.level++;
-      this.setLevel(this.level);
       if (this.delay > 100) this.delay -= 100;
     }
   }
@@ -76,7 +80,6 @@ class GameV2 {
     if (isPieceAtBottom(this.piece, this.board)) {
       this.board.addCells(this.piece.cells);
       this.highlightRows = this.board.getFullRows();
-      console.log(this.highlightRows);
       this.runViewUpdate();
 
       await this.wait(200);
@@ -121,6 +124,9 @@ class GameV2 {
       holdPiece: {},
       queue: {},
       highlight: this.highlightRows,
+      lines: this.lines,
+      score: this.score,
+      level: this.level,
     };
 
     this.board.cells.forEach(
@@ -151,8 +157,6 @@ class GameV2 {
         (cell) => (result["holdPiece"][`${cell.x}-${cell.y}`] = cell.color)
       );
     }
-
-    console.log({ result });
 
     return result;
   }

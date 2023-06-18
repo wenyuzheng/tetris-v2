@@ -6,6 +6,7 @@ import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 import useWindowSize from "./lib/hooks/useWindowSize";
 import useSwipe from "./lib/hooks/useSwipe";
+import StatsDisplay from "./components/StatsDisplay";
 
 let board = new Board(10, 20);
 let game = new Game(
@@ -20,18 +21,17 @@ function App() {
     holdPiece: {},
     queue: {},
     highlight: [],
+    lines: 0,
+    score: 0,
+    level: 1,
   });
   const [gameStart, setGameStart] = useState(false);
   const [gamePause, setGamePause] = useState(true);
-  const [score, setScore] = useState(0);
-  const [level, setLevel] = useState(1);
 
   useEffect(() => {
     game.viewUpdater = setViewData;
     game.setGameStart = setGameStart;
     game.setGamePause = setGamePause;
-    game.setScore = setScore;
-    game.setLevel = setLevel;
   }, []);
 
   const swipeActions = useSwipe({
@@ -97,12 +97,11 @@ function App() {
                   viewData={viewData["holdPiece"]}
                 />
               </div>
-              <div style={{ border: "2px black solid" }}>
-                <h3>Score</h3>
-                <h4>{score}</h4>
-                <h3>Level</h3>
-                <h4>{level}</h4>
-              </div>
+              <StatsDisplay
+                lines={viewData["lines"]}
+                score={viewData["score"]}
+                level={viewData["level"]}
+              />
             </div>
             <div>
               <Grid
