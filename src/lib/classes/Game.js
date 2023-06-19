@@ -17,6 +17,7 @@ class GameV2 {
     this.isPieceSwapped = false;
     this.highlightRows = [];
     this.pause = true;
+    this.start = false;
     this.score = 0;
     this.level = 1;
     this.lines = 0;
@@ -32,7 +33,7 @@ class GameV2 {
     });
   }
 
-  movePiece(direction, distance = 1) {
+  async movePiece(direction, distance = 1) {
     const maxDistance = getDistanceFromEdge(this.piece, this.board, direction);
     if (distance > maxDistance) distance = maxDistance;
 
@@ -41,6 +42,7 @@ class GameV2 {
       if (!this.board.isPositionArrayValid(position)) return;
       this.piece.move(direction);
       this.runViewUpdate();
+      await this.wait(15);
     }
   }
 
@@ -74,31 +76,8 @@ class GameV2 {
     }
   }
 
-  async runPiece() {
-    this.movePiece("down");
-
-    if (isPieceAtBottom(this.piece, this.board)) {
-      this.board.addCells(this.piece.cells);
-      this.highlightRows = this.board.getFullRows();
-      this.runViewUpdate();
-
-      await this.wait(200);
-
-      this.board.removeFullRows();
-      this.calculateScoreAndLevel(this.highlightRows.length);
-      this.highlightRows = [];
-      this.runViewUpdate();
-
-      this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
-      this.queuePieceNameArr.unshift(getRandomPieceName());
-      this.isPieceSwapped = false;
-      this.runViewUpdate();
-    }
-  }
-
   pauseGame() {
     this.pause = !this.pause;
-    this.setGamePause(this.pause);
     this.runViewUpdate();
   }
 
@@ -127,6 +106,8 @@ class GameV2 {
       lines: this.lines,
       score: this.score,
       level: this.level,
+      start: this.start,
+      pause: this.pause,
     };
 
     this.board.cells.forEach(
@@ -168,13 +149,34 @@ class GameV2 {
     }
   }
 
+  async runPiece() {
+    this.movePiece("down");
+
+    if (isPieceAtBottom(this.piece, this.board)) {
+      this.board.addCells(this.piece.cells);
+      this.highlightRows = this.board.getFullRows();
+
+      this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
+      this.queuePieceNameArr.unshift(getRandomPieceName());
+      this.isPieceSwapped = false;
+      this.runViewUpdate();
+
+      await this.wait(200);
+
+      this.board.removeFullRows();
+      this.calculateScoreAndLevel(this.highlightRows.length);
+      this.highlightRows = [];
+      this.runViewUpdate();
+    }
+  }
+
   async run() {
     this.runViewUpdate();
-    this.setGameStart(true);
+    this.start = true;
     this.pause = false;
-    this.setGamePause(this.pause);
+    this.runViewUpdate();
 
-    await this.wait(1000);
+    await this.wait(this.delay);
 
     while (!isGameOver(this.piece, this.board)) {
       if (!this.pause) {
@@ -183,7 +185,7 @@ class GameV2 {
       await this.wait(this.delay);
     }
 
-    this.setGameStart(false);
+    this.start = false;
     this.runViewUpdate();
 
     console.log("game over");

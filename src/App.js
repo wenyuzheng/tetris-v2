@@ -24,14 +24,12 @@ function App() {
     lines: 0,
     score: 0,
     level: 1,
+    start: false,
+    pause: true,
   });
-  const [gameStart, setGameStart] = useState(false);
-  const [gamePause, setGamePause] = useState(true);
 
   useEffect(() => {
     game.viewUpdater = setViewData;
-    game.setGameStart = setGameStart;
-    game.setGamePause = setGamePause;
   }, []);
 
   const swipeActions = useSwipe({
@@ -57,11 +55,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (gameStart) {
+    if (viewData["start"]) {
       document.addEventListener("keydown", handleKeyPress);
     }
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [handleKeyPress, gameStart]);
+  }, [handleKeyPress, viewData["start"]]);
 
   const windowSize = useWindowSize();
   const margin = windowSize.width <= 767 ? 10 : 20;
@@ -71,8 +69,8 @@ function App() {
   return (
     <div className="App" {...swipeActions}>
       <h1>Tetris</h1>
-      {gameStart ? (
-        gamePause ? (
+      {viewData["start"] ? (
+        viewData["pause"] ? (
           <button onClick={() => game.pauseGame()}>resume</button>
         ) : (
           <div style={{ display: "flex" }}>
