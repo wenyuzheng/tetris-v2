@@ -9,6 +9,7 @@ import useSwipe from "./lib/hooks/useSwipe";
 import HotKeyContainer from "./containers/HotKeyContainer";
 import LeftColumn from "./components/LeftColumn";
 import RightColumn from "./components/RightColumn";
+import UseSwipeContainer from "./containers/UseSwipeContainer";
 
 let board = new Board(10, 20);
 let game = new Game(
@@ -62,37 +63,45 @@ function App() {
   }, []);
 
   return (
-    <div className="App" {...swipeActions}>
+    <div className="App">
       <h1>Tetris</h1>
       {viewData["start"] ? (
         viewData["pause"] ? (
           <button onClick={() => game.pauseGame()}>resume</button>
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
-            <div style={{ display: "flex" }}>
-              <LeftColumn
-                margin={margin}
-                squareSize={squareSize}
-                lines={viewData["lines"]}
-                score={viewData["score"]}
-                level={viewData["level"]}
-                data={viewData["holdPiece"]}
-                holdHandler={() => game.swapHoldPiece()}
-              />
-              <Grid
-                squareSize={squareSize}
-                width={board.width}
-                height={board.height}
-                viewData={viewData["board"]}
-                highlightRows={viewData["highlight"]}
-              />
-              <RightColumn
-                margin={margin}
-                squareSize={squareSize}
-                data={viewData["queue"]}
-                pauseHandler={() => game.pauseGame()}
-              />
-            </div>
+            <UseSwipeContainer swipeActions={swipeActions}>
+              <div style={{ display: "flex" }}>
+                <LeftColumn
+                  margin={margin}
+                  squareSize={squareSize}
+                  lines={viewData["lines"]}
+                  score={viewData["score"]}
+                  level={viewData["level"]}
+                  data={viewData["holdPiece"]}
+                  holdHandler={(e) => {
+                    e.stopPropagation();
+                    game.swapHoldPiece();
+                  }}
+                />
+                <Grid
+                  squareSize={squareSize}
+                  width={board.width}
+                  height={board.height}
+                  viewData={viewData["board"]}
+                  highlightRows={viewData["highlight"]}
+                />
+                <RightColumn
+                  margin={margin}
+                  squareSize={squareSize}
+                  data={viewData["queue"]}
+                  pauseHandler={(e) => {
+                    e.stopPropagation();
+                    game.pauseGame();
+                  }}
+                />
+              </div>
+            </UseSwipeContainer>
           </HotKeyContainer>
         )
       ) : (
