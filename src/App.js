@@ -6,8 +6,9 @@ import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 import useWindowSize from "./lib/hooks/useWindowSize";
 import useSwipe from "./lib/hooks/useSwipe";
-import StatsDisplay from "./components/StatsDisplay";
 import HotKeyContainer from "./containers/HotKeyContainer";
+import LeftColumn from "./components/LeftColumn";
+import RightColumn from "./components/RightColumn";
 
 let board = new Board(10, 20);
 let game = new Game(
@@ -69,61 +70,28 @@ function App() {
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
             <div style={{ display: "flex" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  marginRight: margin,
-                }}
-              >
-                <div
-                  onClick={() => {
-                    game.swapHoldPiece();
-                  }}
-                >
-                  <h3>Hold</h3>
-                  <Grid
-                    squareSize={squareSize}
-                    width={4}
-                    height={3}
-                    viewData={viewData["holdPiece"]}
-                  />
-                </div>
-                <StatsDisplay
-                  lines={viewData["lines"]}
-                  score={viewData["score"]}
-                  level={viewData["level"]}
-                />
-              </div>
-              <div>
-                <Grid
-                  squareSize={squareSize}
-                  width={board.width}
-                  height={board.height}
-                  viewData={viewData["board"]}
-                  highlightRows={viewData["highlight"]}
-                />
-              </div>
-              <div
-                style={{
-                  marginLeft: margin,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <h3>Queue</h3>
-                  <Grid
-                    squareSize={squareSize}
-                    width={4}
-                    height={12}
-                    viewData={viewData["queue"]}
-                  />
-                </div>
-                <button onClick={() => game.pauseGame()}>Pause</button>
-              </div>
+              <LeftColumn
+                margin={margin}
+                squareSize={squareSize}
+                lines={viewData["lines"]}
+                score={viewData["score"]}
+                level={viewData["level"]}
+                data={viewData["holdPiece"]}
+                holdHandler={() => game.swapHoldPiece()}
+              />
+              <Grid
+                squareSize={squareSize}
+                width={board.width}
+                height={board.height}
+                viewData={viewData["board"]}
+                highlightRows={viewData["highlight"]}
+              />
+              <RightColumn
+                margin={margin}
+                squareSize={squareSize}
+                data={viewData["queue"]}
+                holdHandler={() => game.pauseGame()}
+              />
             </div>
           </HotKeyContainer>
         )
