@@ -90,7 +90,7 @@ function App() {
                 margin={margin}
                 squareSize={squareSize}
                 data={viewData["queue"]}
-                holdHandler={() => game.pauseGame()}
+                pauseHandler={() => game.pauseGame()}
               />
             </div>
           </HotKeyContainer>

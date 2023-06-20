@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./Square.css";
 
 const Square = ({ color, isHighlight, isGhost }) => {
@@ -14,4 +15,4 @@ const Square = ({ color, isHighlight, isGhost }) => {
   );
 };
 
-export default Square;
+export default memo(Square);
