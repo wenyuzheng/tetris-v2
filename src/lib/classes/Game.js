@@ -46,9 +46,14 @@ class GameV2 {
     }
   }
 
-  hardDropPiece() {
+  async hardDropPiece() {
     this.movePiece("down", this.board.height);
     this.runViewUpdate();
+    await this.wait(350);
+
+    if (isPieceAtBottom(this.piece, this.board)) {
+      this.runBottomUpdate();
+    }
   }
 
   rotatePiece() {
@@ -94,6 +99,23 @@ class GameV2 {
       }
     }
     this.isPieceSwapped = true;
+    this.runViewUpdate();
+  }
+
+  async runBottomUpdate() {
+    this.board.addCells(this.piece.cells);
+    this.highlightRows = this.board.getFullRows();
+
+    this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
+    this.queuePieceNameArr.unshift(getRandomPieceName());
+    this.isPieceSwapped = false;
+    this.runViewUpdate();
+
+    await this.wait(200);
+
+    this.board.removeFullRows();
+    this.calculateScoreAndLevel(this.highlightRows.length);
+    this.highlightRows = [];
     this.runViewUpdate();
   }
 
@@ -153,20 +175,7 @@ class GameV2 {
     this.movePiece("down");
 
     if (isPieceAtBottom(this.piece, this.board)) {
-      this.board.addCells(this.piece.cells);
-      this.highlightRows = this.board.getFullRows();
-
-      this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
-      this.queuePieceNameArr.unshift(getRandomPieceName());
-      this.isPieceSwapped = false;
-      this.runViewUpdate();
-
-      await this.wait(200);
-
-      this.board.removeFullRows();
-      this.calculateScoreAndLevel(this.highlightRows.length);
-      this.highlightRows = [];
-      this.runViewUpdate();
+      this.runBottomUpdate();
     }
   }
 
