@@ -6,9 +6,16 @@ import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 import Points from "../constants/Points";
+import musicFile from "../../asset/sound/music.mp3";
+import clearSound from "../../asset/sound/clear.mp3";
+import gameOverSound from "../../asset/sound/gameOver.mp3";
 
 class GameV2 {
   constructor(board, pieceGenerator, delay) {
+    this.music = new Audio(musicFile);
+    this.clearSound = new Audio(clearSound);
+    this.gameOverSound = new Audio(gameOverSound);
+
     this.delay = delay;
     this.board = board;
     this.piece = pieceGenerator();
@@ -21,6 +28,8 @@ class GameV2 {
     this.score = 0;
     this.level = 1;
     this.lines = 0;
+    this.isMusicOn = false;
+    this.isSoundOn = false;
   }
 
   getPieceByName(pieceName) {
@@ -86,6 +95,26 @@ class GameV2 {
     this.runViewUpdate();
   }
 
+  playMusic() {
+    this.isMusicOn = !this.isMusicOn;
+    if (this.isMusicOn) {
+      this.music.play();
+    } else {
+      this.music.pause();
+    }
+  }
+
+  onOffSound() {
+    this.isSoundOn = !this.isSoundOn;
+  }
+
+  playSound() {
+    if (this.isSoundOn) {
+      if (this.highlightRows.length !== 0) this.clearSound.play();
+      if (!this.start) this.gameOverSound.play();
+    }
+  }
+
   swapHoldPiece() {
     if (!this.isPieceSwapped) {
       if (this.heldPieceName === null) {
@@ -105,6 +134,7 @@ class GameV2 {
   async runBottomUpdate() {
     this.board.addCells(this.piece.cells);
     this.highlightRows = this.board.getFullRows();
+    this.playSound();
 
     this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
     this.queuePieceNameArr.unshift(getRandomPieceName());
@@ -130,6 +160,8 @@ class GameV2 {
       level: this.level,
       start: this.start,
       pause: this.pause,
+      music: this.isMusicOn,
+      sound: this.isSoundOn,
     };
 
     this.board.cells.forEach(
@@ -183,6 +215,8 @@ class GameV2 {
     this.runViewUpdate();
     this.start = true;
     this.pause = false;
+    this.playMusic();
+    this.onOffSound();
     this.runViewUpdate();
 
     await this.wait(this.delay);
@@ -195,6 +229,8 @@ class GameV2 {
     }
 
     this.start = false;
+    this.playSound();
+    this.playMusic();
     this.runViewUpdate();
 
     console.log("game over");

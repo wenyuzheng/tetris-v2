@@ -10,6 +10,7 @@ import HotKeyContainer from "./containers/HotKeyContainer";
 import LeftColumn from "./components/LeftColumn";
 import RightColumn from "./components/RightColumn";
 import UseSwipeContainer from "./containers/UseSwipeContainer";
+import PausePage from "./components/PausePage";
 
 let board = new Board(10, 20);
 let game = new Game(
@@ -29,6 +30,8 @@ function App() {
     level: 1,
     start: false,
     pause: true,
+    music: false,
+    sound: false,
   });
 
   useEffect(() => {
@@ -67,7 +70,11 @@ function App() {
       <h1>Tetris</h1>
       {viewData["start"] ? (
         viewData["pause"] ? (
-          <button onClick={() => game.pauseGame()}>resume</button>
+          <PausePage
+            resumeHandler={() => game.pauseGame()}
+            musicHandler={() => game.playMusic()}
+            soundHandler={() => game.onOffSound()}
+          />
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
             <UseSwipeContainer swipeActions={swipeActions}>
