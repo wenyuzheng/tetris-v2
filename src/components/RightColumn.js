@@ -21,7 +21,13 @@ const RightColumn = ({
     >
       <div>
         <h3>Queue</h3>
-        <Grid squareSize={squareSize} width={4} height={12} viewData={data} />
+        <Grid
+          squareSize={squareSize}
+          width={4}
+          height={12}
+          viewData={data}
+          noGrid={true}
+        />
       </div>
 
       <button onClick={musicHandler}>

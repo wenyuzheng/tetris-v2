@@ -8,17 +8,31 @@ const StyledGrid = styled.div`
   grid-template-rows: repeat(${(props) => props.height}, 1fr);
   grid-template-columns: repeat(${(props) => props.width}, 1fr);
   gap: 1px;
-  background-color: black;
+  background-color: ${(props) => props.bgColor};
   float: left;
   grid-auto-flow: column;
 `;
 
-const Grid = ({ squareSize, width, height, viewData, highlightRows = [] }) => {
+const Grid = ({
+  squareSize,
+  width,
+  height,
+  viewData,
+  highlightRows = [],
+  noGrid = false,
+}) => {
   const xIndices = [...Array(width).keys()];
   const yIndices = [...Array(height).keys()].reverse();
 
+  const bgColor = noGrid ? "#3a3b3c" : "black";
+
   return (
-    <StyledGrid squareSize={squareSize} width={width} height={height}>
+    <StyledGrid
+      squareSize={squareSize}
+      width={width}
+      height={height}
+      bgColor={bgColor}
+    >
       {xIndices.map((i) => {
         return yIndices.map((j) => {
           const color = viewData[`${i}-${j}`];

@@ -5,7 +5,13 @@ const HoldGrid = ({ squareSize, data, holdHandler }) => {
   return (
     <div onClick={holdHandler}>
       <h3>Hold</h3>
-      <Grid squareSize={squareSize} width={4} height={3} viewData={data} />
+      <Grid
+        squareSize={squareSize}
+        width={4}
+        height={3}
+        viewData={data}
+        noGrid={true}
+      />
     </div>
   );
 };
