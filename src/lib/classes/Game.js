@@ -91,12 +91,15 @@ class GameV2 {
 
   pauseGame() {
     this.pause = !this.pause;
+    this.playMusic();
     this.runViewUpdate();
   }
 
   playMusic() {
     this.isMusicOn = !this.isMusicOn;
-    if (this.isMusicOn) {
+    this.runViewUpdate();
+
+    if (this.isMusicOn && !this.pause) {
       this.music.play();
     } else {
       this.music.pause();
@@ -105,6 +108,7 @@ class GameV2 {
 
   onOffSound() {
     this.isSoundOn = !this.isSoundOn;
+    this.runViewUpdate();
   }
 
   playSound() {

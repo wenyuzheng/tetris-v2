@@ -1,9 +1,7 @@
-const PausePage = ({ resumeHandler, musicHandler, soundHandler }) => {
+const PausePage = ({ resumeHandler }) => {
   return (
     <div>
       <button onClick={resumeHandler}>Resume</button>
-      <button onClick={musicHandler}>Music</button>
-      <button onClick={soundHandler}>Sound</button>
     </div>
   );
 };

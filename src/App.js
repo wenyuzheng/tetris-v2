@@ -66,14 +66,6 @@ function App() {
               e.stopPropagation();
               game.pauseGame();
             }}
-            musicHandler={(e) => {
-              e.stopPropagation();
-              game.playMusic();
-            }}
-            soundHandler={(e) => {
-              e.stopPropagation();
-              game.onOffSound();
-            }}
           />
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
@@ -108,9 +100,19 @@ function App() {
                   margin={margin}
                   squareSize={squareSize}
                   data={viewData["queue"]}
+                  isMusicOn={viewData["music"]}
+                  isSoundOn={viewData["sound"]}
                   pauseHandler={(e) => {
                     e.stopPropagation();
                     game.pauseGame();
+                  }}
+                  musicHandler={(e) => {
+                    e.stopPropagation();
+                    game.playMusic();
+                  }}
+                  soundHandler={(e) => {
+                    e.stopPropagation();
+                    game.onOffSound();
                   }}
                 />
               </div>
