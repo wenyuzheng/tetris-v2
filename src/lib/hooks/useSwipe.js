@@ -19,9 +19,7 @@ const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp, tap }) => {
   const onTouchMove = (e) => {
     setHoriTouchEnd(e.targetTouches[0].clientX);
     setVertiTouchEnd(e.targetTouches[0].clientY);
-  };
 
-  const onTouchEnd = () => {
     if (
       (!horiTouchStart || !horiTouchEnd) &&
       (!vertiTouchStart || !vertiTouchEnd)
@@ -39,14 +37,42 @@ const useSwipe = ({ swipeLeft, swipeRight, swipeDown, swipeUp, tap }) => {
     const times = Math.floor(Math.abs(horiDistance / minSwipeDistance));
 
     if (isLeftSwipe) {
-      swipeLeft(times);
+      // swipeLeft(times);
+      swipeLeft();
     } else if (isRightSwipe) {
-      swipeRight(times);
+      // swipeRight(times);
+      swipeRight();
     } else if (isDownSwipe) {
       swipeDown();
     } else if (isUpSwipe) {
       swipeUp();
     }
+  };
+
+  const onTouchEnd = () => {
+    setHoriTouchEnd(0);
+    setVertiTouchEnd(0);
+    // if (
+    //   (!horiTouchStart || !horiTouchEnd) &&
+    //   (!vertiTouchStart || !vertiTouchEnd)
+    // )
+    //   return;
+    // const horiDistance = horiTouchStart - horiTouchEnd;
+    // const isLeftSwipe = horiDistance > minSwipeDistance;
+    // const isRightSwipe = horiDistance < -minSwipeDistance;
+    // const vertiDistance = vertiTouchStart - vertiTouchEnd;
+    // const isUpSwipe = vertiDistance > minSwipeDistance;
+    // const isDownSwipe = vertiDistance < -minSwipeDistance;
+    // const times = Math.floor(Math.abs(horiDistance / minSwipeDistance));
+    // if (isLeftSwipe) {
+    //   swipeLeft(times);
+    // } else if (isRightSwipe) {
+    //   swipeRight(times);
+    // } else if (isDownSwipe) {
+    //   swipeDown();
+    // } else if (isUpSwipe) {
+    //   swipeUp();
+    // }
   };
 
   return {

@@ -5,7 +5,6 @@ import Game from "./lib/classes/Game";
 import generatePiece from "./lib/functions/generatePiece";
 import Grid from "./components/Grid";
 import useWindowSize from "./lib/hooks/useWindowSize";
-import useSwipe from "./lib/hooks/useSwipe";
 import HotKeyContainer from "./containers/HotKeyContainer";
 import LeftColumn from "./components/LeftColumn";
 import RightColumn from "./components/RightColumn";
@@ -43,14 +42,6 @@ function App() {
   const squareSize =
     windowSize.width >= 1024 ? 30 : (windowSize.width - margin * 4) / 18;
 
-  const swipeActions = useSwipe({
-    swipeLeft: (distance) => game.movePiece("left", distance),
-    swipeRight: (distance) => game.movePiece("right", distance),
-    swipeDown: () => game.hardDropPiece(),
-    swipeUp: () => game.swapHoldPiece(),
-    tap: () => game.rotatePiece(),
-  });
-
   const handleKeyPress = useCallback((e) => {
     if (e.key === "ArrowDown") {
       game.movePiece("down");
@@ -71,13 +62,28 @@ function App() {
       {viewData["start"] ? (
         viewData["pause"] ? (
           <PausePage
-            resumeHandler={() => game.pauseGame()}
-            musicHandler={() => game.playMusic()}
-            soundHandler={() => game.onOffSound()}
+            resumeHandler={(e) => {
+              e.stopPropagation();
+              game.pauseGame();
+            }}
+            musicHandler={(e) => {
+              e.stopPropagation();
+              game.playMusic();
+            }}
+            soundHandler={(e) => {
+              e.stopPropagation();
+              game.onOffSound();
+            }}
           />
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
-            <UseSwipeContainer swipeActions={swipeActions}>
+            <UseSwipeContainer
+              swipeRight={() => game.movePiece("right")}
+              swipeLeft={() => game.movePiece("left")}
+              swipeDown={() => game.movePiece("down")}
+              swipeUp={() => game.swapHoldPiece()}
+              onClick={() => game.rotatePiece()}
+            >
               <div style={{ display: "flex" }}>
                 <LeftColumn
                   margin={margin}
@@ -112,7 +118,14 @@ function App() {
           </HotKeyContainer>
         )
       ) : (
-        <button onClick={() => game.run()}>start</button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            game.run();
+          }}
+        >
+          start
+        </button>
       )}
     </div>
   );
