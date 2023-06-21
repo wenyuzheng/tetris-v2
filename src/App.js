@@ -75,6 +75,7 @@ function App() {
               swipeDown={() => game.movePiece("down")}
               swipeUp={() => game.swapHoldPiece()}
               onClick={() => game.rotatePiece()}
+              fastDown={() => game.hardDropPiece()}
             >
               <div style={{ display: "flex" }}>
                 <LeftColumn

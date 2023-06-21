@@ -7,18 +7,19 @@ const UseSwipeContainer = ({
   swipeDown,
   swipeUp,
   onClick,
+  fastDown,
 }) => {
   const [horiTouch, setHoriTouch] = useState(null);
   const [vertiTouch, setVertiTouch] = useState(null);
+  const [startTime, setStartTime] = useState(null);
 
   const onTouchStart = (e) => {
     setHoriTouch(e.targetTouches[0].clientX);
     setVertiTouch(e.targetTouches[0].clientY);
+    setStartTime(Date.now());
   };
 
   const onTouchMove = (e) => {
-    // console.log(horiTouch, vertiTouch);
-
     if (!horiTouch || !vertiTouch) return;
 
     const { clientX, clientY } = e.touches[0];
@@ -48,12 +49,20 @@ const UseSwipeContainer = ({
     }
   };
 
-  const onTouchEnd = () => {
-    // console.log(horiTouch, vertiTouch);
-    // console.log("should be tap");
+  const onTouchEnd = (e) => {
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    const endY = e.changedTouches[0].clientY;
+    const distance = Math.abs(endY - vertiTouch);
+    const swipeSpeed = distance / duration;
+    if (swipeSpeed > 1) {
+      fastDown();
+      console.log("hard drop");
+    }
 
     setHoriTouch(null);
     setVertiTouch(null);
+    setStartTime(null);
   };
 
   useEffect(() => {
