@@ -42,7 +42,7 @@ class GameV2 {
     });
   }
 
-  async movePiece(direction, distance = 1) {
+  async movePiece(direction, distance = 1, hardDrop = false) {
     const maxDistance = getDistanceFromEdge(this.piece, this.board, direction);
     if (distance > maxDistance) distance = maxDistance;
 
@@ -51,14 +51,13 @@ class GameV2 {
       if (!this.board.isPositionArrayValid(position)) return;
       this.piece.move(direction);
       this.runViewUpdate();
-      await this.wait(15);
+      if (!hardDrop) await this.wait(15);
     }
   }
 
   async hardDropPiece() {
-    this.movePiece("down", this.board.height);
+    this.movePiece("down", this.board.height, true);
     this.runViewUpdate();
-    await this.wait(350);
 
     if (isPieceAtBottom(this.piece, this.board)) {
       this.runBottomUpdate();
