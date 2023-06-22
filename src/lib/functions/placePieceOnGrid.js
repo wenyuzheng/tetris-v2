@@ -1,4 +1,3 @@
-import _ from "lodash";
 import Piece from "../classes/Piece";
 import pieces from "../constants/Pieces";
 import getPiecePositionsOnGrid from "./getPiecePositionsOnGrid";
