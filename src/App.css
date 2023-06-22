@@ -6,7 +6,7 @@
   align-content: center;
   flex-direction: column;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   overflow: hidden;
   touch-action: none;
 }
