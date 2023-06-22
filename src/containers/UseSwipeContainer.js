@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const UseSwipeContainer = ({
   children,
@@ -9,22 +9,18 @@ const UseSwipeContainer = ({
   onClick,
   fastDown,
 }) => {
-  const [horiTouch, setHoriTouch] = useState(null);
-  const [vertiTouch, setVertiTouch] = useState(null);
-  const [startTime, setStartTime] = useState(null);
+  const startPos = useRef(null);
+  const startTime = useRef(null);
 
   const onTouchStart = (e) => {
-    setHoriTouch(e.targetTouches[0].clientX);
-    setVertiTouch(e.targetTouches[0].clientY);
-    setStartTime(Date.now());
+    startPos.current = [e.targetTouches[0].clientX, e.targetTouches[0].clientY];
+    startTime.current = Date.now();
   };
 
   const onTouchMove = (e) => {
-    if (!horiTouch || !vertiTouch) return;
-
-    const { clientX, clientY } = e.touches[0];
-    const deltaX = clientX - horiTouch;
-    const deltaY = clientY - vertiTouch;
+    const { clientX, clientY } = e.targetTouches[0];
+    const deltaX = clientX - startPos.current[0];
+    const deltaY = clientY - startPos.current[1];
 
     const minSwipeDistance = 30;
 
@@ -33,36 +29,51 @@ const UseSwipeContainer = ({
       if (deltaX > minSwipeDistance) {
         swipeRight();
         console.log("right");
+        startPos.current = [
+          e.targetTouches[0].clientX,
+          e.targetTouches[0].clientY,
+        ];
       } else if (deltaX < -minSwipeDistance) {
         swipeLeft();
         console.log("left");
+        startPos.current = [
+          e.targetTouches[0].clientX,
+          e.targetTouches[0].clientY,
+        ];
       }
     } else {
       // Vertical swipe
       if (deltaY > minSwipeDistance) {
         swipeDown();
         console.log("down");
+        startPos.current = [
+          e.targetTouches[0].clientX,
+          e.targetTouches[0].clientY,
+        ];
       } else if (deltaY < -minSwipeDistance) {
         swipeUp();
         console.log("up");
+        startPos.current = [
+          e.targetTouches[0].clientX,
+          e.targetTouches[0].clientY,
+        ];
       }
     }
   };
 
   const onTouchEnd = (e) => {
     const endTime = Date.now();
-    const duration = endTime - startTime;
+    const duration = endTime - startTime.current;
     const endY = e.changedTouches[0].clientY;
-    const distance = Math.abs(endY - vertiTouch);
+    const distance = Math.abs(endY - startPos.current[1]);
     const swipeSpeed = distance / duration;
     if (swipeSpeed > 1) {
       fastDown();
       console.log("hard drop");
     }
 
-    setHoriTouch(null);
-    setVertiTouch(null);
-    setStartTime(null);
+    startPos.current = null;
+    startTime.current = null;
   };
 
   useEffect(() => {
