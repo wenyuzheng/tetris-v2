@@ -10,7 +10,7 @@ import musicFile from "../../asset/sound/music.mp3";
 import clearSound from "../../asset/sound/clear.mp3";
 import gameOverSound from "../../asset/sound/gameOver.mp3";
 
-class GameV2 {
+class Game {
   constructor(board, pieceGenerator, delay) {
     this.music = new Audio(musicFile);
     this.clearSound = new Audio(clearSound);
@@ -240,4 +240,4 @@ class GameV2 {
   }
 }
 
-export default GameV2;
+export default Game;
