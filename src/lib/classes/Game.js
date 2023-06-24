@@ -9,6 +9,7 @@ import Points from "../constants/Points";
 import musicFile from "../../asset/sound/music.mp3";
 import clearSound from "../../asset/sound/clear.mp3";
 import gameOverSound from "../../asset/sound/gameOver.mp3";
+import getQueuePieces from "../functions/getQueuePieces";
 
 class Game {
   constructor(board, pieceGenerator, delay) {
@@ -19,7 +20,7 @@ class Game {
     this.delay = delay;
     this.board = board;
     this.piece = pieceGenerator();
-    this.queuePieceNameArr = Array.from({ length: 3 }, getRandomPieceName);
+    this.queuePieceNameArr = getQueuePieces(5);
     this.heldPieceName = null;
     this.isPieceSwapped = false;
     this.highlightRows = [];
@@ -123,7 +124,9 @@ class Game {
       if (this.heldPieceName === null) {
         this.heldPieceName = this.piece.name;
         this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
-        this.queuePieceNameArr.unshift(getRandomPieceName());
+        this.queuePieceNameArr.unshift(
+          getRandomPieceName(this.queuePieceNameArr)
+        );
       } else {
         const pieceCopy = this.piece;
         this.piece = this.getPieceByName(this.heldPieceName);
@@ -140,7 +143,7 @@ class Game {
     this.playSound();
 
     this.piece = this.getPieceByName(this.queuePieceNameArr.pop());
-    this.queuePieceNameArr.unshift(getRandomPieceName());
+    this.queuePieceNameArr.unshift(getRandomPieceName(this.queuePieceNameArr));
     this.isPieceSwapped = false;
     this.runViewUpdate();
 
@@ -229,6 +232,7 @@ class Game {
         this.runPiece();
       }
       await this.wait(this.delay);
+      // console.log(this.isSoundOn);
     }
 
     this.start = false;

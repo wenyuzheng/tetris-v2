@@ -31,7 +31,6 @@ const UseSwipeContainer = ({
       // Horizontal swipe
       if (deltaX > minSwipeDistance) {
         swipeRight();
-        console.log("right");
         startPos.current = [
           e.targetTouches[0].clientX,
           e.targetTouches[0].clientY,
@@ -39,7 +38,6 @@ const UseSwipeContainer = ({
         startTime.current = Date.now();
       } else if (deltaX < -minSwipeDistance) {
         swipeLeft();
-        console.log("left");
         startPos.current = [
           e.targetTouches[0].clientX,
           e.targetTouches[0].clientY,
@@ -52,13 +50,11 @@ const UseSwipeContainer = ({
         const duration = Date.now() - startTime.current;
         const swipeSpeed = deltaY / duration;
 
-        if (swipeSpeed > 5) {
+        if (swipeSpeed > 1.5) {
           fastDown();
-          console.log("hard drop");
           canMove.current = false;
         } else {
           swipeDown();
-          console.log("down");
         }
 
         startPos.current = [
@@ -68,7 +64,6 @@ const UseSwipeContainer = ({
         startTime.current = Date.now();
       } else if (deltaY < -minSwipeDistance) {
         swipeUp();
-        console.log("up");
         startPos.current = [
           e.targetTouches[0].clientX,
           e.targetTouches[0].clientY,

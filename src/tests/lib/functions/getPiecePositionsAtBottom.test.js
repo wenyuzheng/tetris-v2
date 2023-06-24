@@ -105,7 +105,6 @@ describe("getPiecePositionsAtBottom", () => {
       [2, 2],
       [2, 1],
     ];
-    console.log({ result });
     expect(result).toEqual(expected);
   });
 });

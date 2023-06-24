@@ -22,9 +22,9 @@ const RightColumn = ({
       <div>
         <h3>Queue</h3>
         <Grid
-          squareSize={squareSize}
+          squareSize={(squareSize / 3) * 2}
           width={4}
-          height={12}
+          height={20}
           viewData={data}
           noGrid={true}
         />
