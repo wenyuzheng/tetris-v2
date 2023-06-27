@@ -110,10 +110,12 @@ function App() {
                   musicHandler={(e) => {
                     e.stopPropagation();
                     game.playMusic();
+                    e.target.blur();
                   }}
                   soundHandler={(e) => {
                     e.stopPropagation();
                     game.onOffSound();
+                    e.target.blur();
                   }}
                 />
               </div>
