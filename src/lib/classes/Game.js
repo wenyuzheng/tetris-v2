@@ -8,6 +8,7 @@ import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 import Points from "../constants/Points";
 import clearSound from "../../asset/sound/clear.mp3";
 import gameOverSound from "../../asset/sound/gameOver.mp3";
+import moveSound from "../../asset/sound/move.mp3";
 import BgMusics from "../constants/BgMusics";
 import getQueuePieces from "../functions/getQueuePieces";
 import _ from "lodash";
@@ -17,6 +18,7 @@ class Game {
     this.music = _.sample(BgMusics);
     this.clearSound = new Audio(clearSound);
     this.gameOverSound = new Audio(gameOverSound);
+    this.moveSound = new Audio(moveSound);
 
     this.delay = delay;
     this.board = board;
@@ -67,6 +69,9 @@ class Game {
       const position = this.piece.getPositionAfterMove(direction);
       if (!this.board.isPositionArrayValid(position)) return;
       this.piece.move(direction);
+
+      // if (direction !== "down") this.moveSound.play();
+
       this.runViewUpdate();
       if (!hardDrop) await this.wait(15);
     }
