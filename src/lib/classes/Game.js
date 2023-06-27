@@ -6,14 +6,15 @@ import generatePiece, { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 import Points from "../constants/Points";
-import musicFile from "../../asset/sound/music.mp3";
 import clearSound from "../../asset/sound/clear.mp3";
 import gameOverSound from "../../asset/sound/gameOver.mp3";
+import BgMusics from "../constants/BgMusics";
 import getQueuePieces from "../functions/getQueuePieces";
+import _ from "lodash";
 
 class Game {
   constructor(board, pieceGenerator, delay) {
-    this.music = new Audio(musicFile);
+    this.music = _.sample(BgMusics);
     this.clearSound = new Audio(clearSound);
     this.gameOverSound = new Audio(gameOverSound);
 
