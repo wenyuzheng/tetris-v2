@@ -2,7 +2,7 @@ import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
-import { getRandomPieceName } from "../functions/generatePiece";
+import generatePiece, { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 import Points from "../constants/Points";
@@ -31,6 +31,23 @@ class Game {
     this.lines = 0;
     this.isMusicOn = false;
     this.isSoundOn = false;
+  }
+
+  async restart() {
+    this.board.cells = [];
+    this.delay = 1000;
+    this.piece = generatePiece(this.board.width, this.board.height);
+    this.heldPieceName = null;
+    this.isPieceSwapped = false;
+    this.score = 0;
+    this.level = 1;
+    this.lines = 0;
+    this.pause = false;
+    this.playMusic();
+
+    this.runViewUpdate();
+
+    await this.wait(this.delay);
   }
 
   getPieceByName(pieceName) {
@@ -218,24 +235,20 @@ class Game {
   }
 
   async run() {
-    this.runViewUpdate();
     this.start = true;
     this.pause = false;
     this.playMusic();
     this.onOffSound();
     this.runViewUpdate();
 
-    await this.wait(this.delay);
-
     while (!isGameOver(this.piece, this.board)) {
+      await this.wait(this.delay);
+
       if (!this.pause) {
         this.runPiece();
       }
-      await this.wait(this.delay);
-      // console.log(this.isSoundOn);
     }
 
-    this.start = false;
     this.playSound();
     this.playMusic();
     this.runViewUpdate();

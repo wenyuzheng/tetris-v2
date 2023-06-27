@@ -66,6 +66,10 @@ function App() {
               e.stopPropagation();
               game.pauseGame();
             }}
+            restartHandler={(e) => {
+              e.stopPropagation();
+              game.restart();
+            }}
           />
         ) : (
           <HotKeyContainer handleKeyPress={handleKeyPress}>
