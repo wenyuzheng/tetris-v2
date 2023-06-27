@@ -133,7 +133,7 @@ function App() {
             game.run();
           }}
         >
-          start
+          Start
         </button>
       )}
     </div>

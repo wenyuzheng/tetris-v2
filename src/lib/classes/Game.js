@@ -33,7 +33,7 @@ class Game {
     this.isSoundOn = false;
   }
 
-  async restart() {
+  restart() {
     this.board.cells = [];
     this.delay = 1000;
     this.piece = generatePiece(this.board.width, this.board.height);
@@ -46,8 +46,6 @@ class Game {
     this.playMusic();
 
     this.runViewUpdate();
-
-    await this.wait(this.delay);
   }
 
   getPieceByName(pieceName) {

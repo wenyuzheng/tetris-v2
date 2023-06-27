@@ -19,7 +19,7 @@ const RightColumn = ({
         justifyContent: "space-between",
       }}
     >
-      <div>
+      <div style={{ margin: "auto" }}>
         <h3>Queue</h3>
         <Grid
           squareSize={(squareSize / 3) * 2}

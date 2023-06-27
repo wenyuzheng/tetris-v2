@@ -1,5 +1,5 @@
 import { memo } from "react";
-import "./Square.css";
+import "./css/Square.css";
 
 const Square = ({ color, isHighlight, isGhost }) => {
   const classname = isHighlight && color ? "flashHighlight" : "";
