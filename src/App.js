@@ -11,8 +11,8 @@ import RightColumn from "./components/RightColumn";
 import UseSwipeContainer from "./containers/UseSwipeContainer";
 import PausePage from "./components/PausePage";
 
-let board = new Board(10, 20);
-let game = new Game(
+const board = new Board(10, 20);
+const game = new Game(
   board,
   () => generatePiece(board.width, board.height),
   1000

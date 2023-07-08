@@ -2,7 +2,7 @@ import isPieceAtBottom from "../functions/isPieceAtBottom";
 import isGameOver from "../functions/isGameOver";
 import pieceOutOfBoardDirection from "../functions/pieceOutOfBoardDirection";
 import placePieceOnGrid from "../functions/placePieceOnGrid";
-import generatePiece, { getRandomPieceName } from "../functions/generatePiece";
+import { getRandomPieceName } from "../functions/generatePiece";
 import getPiecePositionsAtBottom from "../functions/getPiecePositionsAtBottom";
 import getDistanceFromEdge from "../functions/getDistanceFromEdge";
 import Points from "../constants/Points";
@@ -12,6 +12,7 @@ import moveSound from "../../asset/sound/move.mp3";
 import BgMusics from "../constants/BgMusics";
 import getQueuePieces from "../functions/getQueuePieces";
 import _ from "lodash";
+import wait from "../functions/wait";
 
 class Game {
   constructor(board, pieceGenerator, delay) {
@@ -22,7 +23,8 @@ class Game {
 
     this.delay = delay;
     this.board = board;
-    this.piece = pieceGenerator();
+    this.pieceGenerator = pieceGenerator;
+    this.piece = this.pieceGenerator();
     this.queuePieceNameArr = getQueuePieces(5);
     this.heldPieceName = null;
     this.isPieceSwapped = false;
@@ -39,7 +41,7 @@ class Game {
   restart() {
     this.board.cells = [];
     this.delay = 1000;
-    this.piece = generatePiece(this.board.width, this.board.height);
+    this.piece = this.pieceGenerator();
     this.heldPieceName = null;
     this.isPieceSwapped = false;
     this.score = 0;
@@ -55,12 +57,6 @@ class Game {
     return placePieceOnGrid(this.board.width, this.board.height, pieceName);
   }
 
-  wait(delay) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, delay);
-    });
-  }
-
   async movePiece(direction, distance = 1, hardDrop = false) {
     const maxDistance = getDistanceFromEdge(this.piece, this.board, direction);
     if (distance > maxDistance) distance = maxDistance;
@@ -73,11 +69,11 @@ class Game {
       // if (direction !== "down") this.moveSound.play();
 
       this.runViewUpdate();
-      if (!hardDrop) await this.wait(15);
+      if (!hardDrop) await wait(15);
     }
   }
 
-  async hardDropPiece() {
+  hardDropPiece() {
     this.movePiece("down", this.board.height, true);
     this.runViewUpdate();
 
@@ -99,7 +95,7 @@ class Game {
     }
   }
 
-  calculateScoreAndLevel(fullRowsNum) {
+  updateScoreAndLevel(fullRowsNum) {
     if (!fullRowsNum) return;
 
     this.score += Points[fullRowsNum] * this.level;
@@ -168,10 +164,10 @@ class Game {
     this.isPieceSwapped = false;
     this.runViewUpdate();
 
-    await this.wait(200);
+    await wait(200);
 
     this.board.removeFullRows();
-    this.calculateScoreAndLevel(this.highlightRows.length);
+    this.updateScoreAndLevel(this.highlightRows.length);
     this.highlightRows = [];
     this.runViewUpdate();
   }
@@ -207,7 +203,7 @@ class Game {
 
     for (let i = 1; i <= this.queuePieceNameArr.length; i++) {
       const queueName = this.queuePieceNameArr[i - 1];
-      const queuePiece = placePieceOnGrid(4, 12, queueName, 3, i);
+      const queuePiece = placePieceOnGrid(4, 20, queueName, 5, i);
       queuePiece.cells.forEach(
         (cell) => (result["queue"][`${cell.x}-${cell.y}`] = cell.color)
       );
@@ -230,7 +226,7 @@ class Game {
     }
   }
 
-  async runPiece() {
+  runPiece() {
     this.movePiece("down");
 
     if (isPieceAtBottom(this.piece, this.board)) {
@@ -246,10 +242,15 @@ class Game {
     this.runViewUpdate();
 
     while (!isGameOver(this.piece, this.board)) {
-      await this.wait(this.delay);
+      await wait(this.delay);
 
       if (!this.pause) {
         this.runPiece();
+
+        if (this.music.ended) {
+          this.music = _.sample(BgMusics);
+          this.music.play();
+        }
       }
     }
 
